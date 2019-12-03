@@ -26,6 +26,7 @@ public class parsingLecture {
 					String lectureType="";
 					String lectureName="";
 					String professor="";
+					String code="";
 					Vector<timeBlock> time=new Vector<timeBlock>();
 					int level=0;
 					int credit=0;
@@ -45,6 +46,9 @@ public class parsingLecture {
 								lectureType = value;
 								break;
 								
+							case 4:
+								code = value;
+								break;
 							case 5:
 								lectureName = value;
 								break;
@@ -113,10 +117,10 @@ public class parsingLecture {
 					if(lectureType.substring(0, 2).compareTo("전공")==0) {
 						isMajor = true;
 						if(lectureType.length()==2) {
-							lectureTypeInt=1;
+							lectureTypeInt=2;
 						}
 						else if(lectureType.substring(2, 4).compareTo("기초")==0) {
-							lectureTypeInt = 2;
+							lectureTypeInt = 1;
 						}
 					}
 					else {
@@ -124,19 +128,14 @@ public class parsingLecture {
 							lectureTypeInt=0;
 						}
 					}
-					if(rowIndex!=1&&lectures.lastElement().lastElement().getName().compareTo(lectureName)==0) {
-						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level));
+					if(rowIndex!=1&&lectures.lastElement().lastElement().getCode().substring(0, 5).compareTo(code.substring(0, 5))==0) {
+						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));
 					}
 					else {
 						lectures.add(new Vector<lecture>());
-						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level));	
+						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));	
 					}
 					
-				}
-			}
-			for(int i=0;i<lectures.size();i++) {
-				for(int j=0;j<lectures.elementAt(i).size();j++) {
-					lectures.elementAt(i).elementAt(j).showInformation();
 				}
 			}
 			workbook.close();

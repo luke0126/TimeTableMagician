@@ -1,5 +1,4 @@
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -10,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 class nonLectureWindow extends JFrame{
 	private String[] day = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 	private String[] h = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시", "8시", "9시", "10시", "11시", "12시"
@@ -32,7 +31,6 @@ class nonLectureWindow extends JFrame{
 		setTitle("Timetable Magician");
 		Container c = getContentPane();
 		c.setLayout(null);
-		
 		c.setBackground(yourColor);
 		
 		JLabel l1 = new JLabel("일정 이름을 입력하세요");
@@ -70,6 +68,7 @@ class nonLectureWindow extends JFrame{
 		JComboBox<String> sHour = new JComboBox<String>(h);
 		sHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				sH = cb.getSelectedIndex();
 			}
@@ -80,6 +79,7 @@ class nonLectureWindow extends JFrame{
 		JComboBox<String> sMin = new JComboBox<String>(m);
 		sMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				sM = cb.getSelectedIndex();
 			}
@@ -97,6 +97,7 @@ class nonLectureWindow extends JFrame{
 		JComboBox<String> eHour = new JComboBox<String>(h);
 		eHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				eH = cb.getSelectedIndex();
 			}
@@ -107,6 +108,7 @@ class nonLectureWindow extends JFrame{
 		JComboBox<String> eMin = new JComboBox<String>(m);
 		eMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				eM = cb.getSelectedIndex();
 			}
@@ -122,6 +124,7 @@ class nonLectureWindow extends JFrame{
 		JComboBox<String> dMin = new JComboBox<String>(m);
 		eMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				dM = cb.getSelectedIndex();
 			}
@@ -175,15 +178,34 @@ class nonLectureWindow extends JFrame{
 						inform+=" "+h[sH]+" "+m[sM]+"~"+h[eH]+" "+m[eM];
 						for(int i=0;i<7;i++) {
 							if(dayBox[i].isSelected()) {
-								timeBlock tB = new timeBlock(sH+sM/6, eH+eM/6, i);
-								n.pushTime(tB);
+								if(eH+eM/6<sH+sM/6) {
+									timeBlock tB = new timeBlock(sH+sM/6, 24, i);
+									n.pushTime(tB);
+									tB=new timeBlock(0, eH+eM/6, (i+1)%7);
+									n.pushTime(tB);
+								}
+								else {
+									timeBlock tB = new timeBlock(sH+(float)sM/6, eH+(float)eM/6, i);
+									n.pushTime(tB);
+								}
 								inform+=" "+day[i];
 							}
 						}
-						sNameList.add(inform);
-						nonLectures.add(n);
-						callWindow(sNameList);
-						JOptionPane.showMessageDialog(c, "추가되었습니다!");
+						boolean isBreak = false;
+						for(int i=0;i<nonLectures.size();i++) {
+							if(nonLectures.elementAt(i).isIntersected(n.getTime())) {
+								JOptionPane.showMessageDialog(c, "시간이 겹칩니다!");
+								isBreak = true;
+								break;
+							}
+						}
+						if(!isBreak) {
+							sNameList.add(inform);
+							nonLectures.add(n);
+							callWindow(sNameList);
+							JOptionPane.showMessageDialog(c, "추가되었습니다!");	
+						}
+						
 					}
 				}
 			}

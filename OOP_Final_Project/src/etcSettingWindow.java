@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
+@SuppressWarnings("serial")
 class etcSettingWindow extends JFrame{
 	private String yourFont = "배달의민족 한나체 Pro";
 	private Color yourColor = new Color(240, 232, 232);
@@ -18,7 +19,8 @@ class etcSettingWindow extends JFrame{
 			, "13시","14시", "15시", "16시", "17시", "18시", "19시","20시", "21시","22시", "23시"};
 	private String[] m = {"0분", "10분", "20분", "30분", "40분", "50분"};
 	private String[] credit = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"};
-	private int sH, sM, eH, eM, mC, MC;
+	private String[] gradeList = {"1학년", "2학년", "3학년", "4학년"};
+	private int sH = 0, sM = 0, eH = 0, eM = 0, mC = 8, MC = 8, Grade = 1;
 	private boolean isReturn;
 	public void callWindow() {
 		getContentPane().removeAll();
@@ -43,6 +45,7 @@ class etcSettingWindow extends JFrame{
 		JComboBox<String> sHour = new JComboBox<String>(h);
 		sHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				sH = cb.getSelectedIndex();
 			}
@@ -53,6 +56,7 @@ class etcSettingWindow extends JFrame{
 		JComboBox<String> sMin = new JComboBox<String>(m);
 		sMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				sM = cb.getSelectedIndex();
 			}
@@ -70,6 +74,7 @@ class etcSettingWindow extends JFrame{
 		JComboBox<String> eHour = new JComboBox<String>(h);
 		eHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				eH = cb.getSelectedIndex();
 			}
@@ -80,6 +85,7 @@ class etcSettingWindow extends JFrame{
 		JComboBox<String> eMin = new JComboBox<String>(m);
 		eMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
 				eM = cb.getSelectedIndex();
 			}
@@ -88,18 +94,24 @@ class etcSettingWindow extends JFrame{
 		c.add(eMin);
 		
 		JLabel l3 = new JLabel("최소 수강 학점");
-		l3.setBounds(20, 80, 220, 20);
+		l3.setBounds(20, 80, 140, 20);
 		l3.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l3);
 		
 		JLabel l4 = new JLabel("최대 수강 학점");
-		l4.setBounds(240, 80, 220, 20);
+		l4.setBounds(160, 80, 140, 20);
 		l4.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l4);
+		
+		JLabel l5 = new JLabel("현재 학년");
+		l5.setBounds(320, 80, 130, 20);
+		l5.setFont(new Font(yourFont, Font.PLAIN, 21));
+		c.add(l5);
 		
 		JComboBox<String> mCredit = new JComboBox<String>(credit);
 		mCredit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource();
 				mC=cb.getSelectedIndex()+8;
 			}
@@ -110,12 +122,24 @@ class etcSettingWindow extends JFrame{
 		JComboBox<String> MCredit = new JComboBox<String>(credit);
 		MCredit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource();
 				MC=cb.getSelectedIndex()+8;
 			}
 		});
-		MCredit.setBounds(260, 110, 70, 20);
+		MCredit.setBounds(180, 110, 70, 20);
 		c.add(MCredit);
+		
+		JComboBox<String> grade = new JComboBox<String>(gradeList);
+		grade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unchecked")
+				JComboBox<String> cb = (JComboBox<String>)e.getSource();
+				Grade=cb.getSelectedIndex()+1;
+			}
+		});
+		grade.setBounds(320, 110, 70, 20);
+		c.add(grade);
 		
 		JButton run = new JButton("실행하기");
 		run.setBounds(100, 200, 200, 50);
@@ -126,6 +150,9 @@ class etcSettingWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(mC>MC) {
 					JOptionPane.showMessageDialog(c, "학점을 확인해 주세요!");
+				}
+				else if(sH*6+sM>=eH*6+eM) {
+					JOptionPane.showMessageDialog(c, "시간을 확인해 주세요!");
 				}
 				else {
 					isReturn = true;
@@ -176,6 +203,11 @@ class etcSettingWindow extends JFrame{
 
 	public int getMC() {
 		return MC;
+	}
+
+
+	public int getGrade() {
+		return Grade;
 	}
 	
 }

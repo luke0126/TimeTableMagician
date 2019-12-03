@@ -24,13 +24,14 @@ class scheduleBlock {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isIntersected(scheduleBlock other) {
-		for(int i=0;i<other.time.size();i++) {
+	public boolean isIntersected(Vector<timeBlock> other) {
+		for(int i=0;i<other.size();i++) {
 			for(int j=0;j<this.time.size();j++) {
-				if(other.time.elementAt(i).getDay()==this.time.elementAt(j).getDay()&&
-						((other.time.elementAt(i).getStartTime()>this.time.elementAt(j).getStartTime()&&other.time.elementAt(i).getStartTime()<this.time.elementAt(j).getEndTime())||
-								(other.time.elementAt(i).getEndTime()>this.time.elementAt(j).getStartTime()&&other.time.elementAt(i).getEndTime()<this.time.elementAt(j).getEndTime())||
-								(other.time.elementAt(i).getStartTime()>this.time.elementAt(j).getStartTime()&&other.time.elementAt(i).getEndTime()<this.time.elementAt(j).getEndTime()))) {
+				if(other.elementAt(i).getDay()==this.time.elementAt(j).getDay()&&
+						((other.elementAt(i).getStartTime()>=this.time.elementAt(j).getStartTime()&&other.elementAt(i).getStartTime()<this.time.elementAt(j).getEndTime())||
+								(other.elementAt(i).getEndTime()>this.time.elementAt(j).getStartTime()&&other.elementAt(i).getEndTime()<=this.time.elementAt(j).getEndTime())||
+									(other.elementAt(i).getStartTime()>=this.time.elementAt(j).getStartTime()&&other.elementAt(i).getEndTime()<=this.time.elementAt(j).getEndTime())||
+									(other.elementAt(i).getStartTime()<=this.time.elementAt(j).getStartTime()&&other.elementAt(i).getEndTime()>=this.time.elementAt(j).getEndTime()))) {
 					return true;
 				}
 			}

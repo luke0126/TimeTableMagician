@@ -7,15 +7,16 @@ class lecture extends scheduleBlock{
 	private int lecture_type;//true->0 : 전공필수, true->1 : 전공, true->2 : 전공기초
 	//false->0 : 필수교양, false->1, 2, 3, 4, 5 : 핵심교양 시리즈
 	private int level; //0->공통, 1, 2, 3, 4->1학년 2학년 3학년 4학년
-	
+	private String code;
 	public lecture(Vector<timeBlock> time, String name, String professor, int credit, boolean isMajor, int lecture_type,
-			int level) {
+			int level, String code) {
 		super(time, name);
 		this.professor = professor;
 		this.credit = credit;
 		this.isMajor = isMajor;
 		this.lecture_type = lecture_type;
 		this.level = level;
+		this.code = code;
 	}
 
 	public void showInformation() {
@@ -89,6 +90,14 @@ class lecture extends scheduleBlock{
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}	
 	
 }
