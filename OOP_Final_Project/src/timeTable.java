@@ -57,7 +57,17 @@ class timeTable extends JFrame{
 				c.add(sBtn.lastElement());
 			}
 		}
-		
+		for(int i=0;i<nonLectures.size();i++) {
+			Color lc = new Color(192+(int)(Math.random()*63), 192+(int)(Math.random()*63), 192+(int)(Math.random()*63));
+			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
+				sBtn.add(new JButton(nonLectures.elementAt(i).getName()));
+				timeBlock tB = nonLectures.elementAt(i).getTime().elementAt(j);
+				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1)
+						, 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)), 195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
+				sBtn.lastElement().setBackground(lc);
+				c.add(sBtn.lastElement());
+			}
+		}
 		
 		JTable tt = new JTable(rowNum, 8);
 		tt.setBounds(20, 20, width, height);

@@ -120,7 +120,7 @@ class timeTableMain{
 				break;
 			}
 		}
-		
+
 		pushMajor(new Vector<lecture>(), 0, 0);
 		
 		for(int i=0;i<onlyMajor.size();i++) {

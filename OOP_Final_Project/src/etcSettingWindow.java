@@ -20,7 +20,7 @@ class etcSettingWindow extends JFrame{
 	private String[] m = {"0분", "10분", "20분", "30분", "40분", "50분"};
 	private String[] credit = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"};
 	private String[] gradeList = {"1학년", "2학년", "3학년", "4학년"};
-	private int sH = 11, sM = 0, eH =18, eM = 0, mC = 16, MC = 21, Grade = 2;
+	private int sH = 0, sM = 0, eH =0, eM = 0, mC = 8, MC = 8, Grade = 1;
 	private boolean isReturn;
 	public void callWindow() {
 		getContentPane().removeAll();

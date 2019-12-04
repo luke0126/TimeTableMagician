@@ -23,10 +23,11 @@ class nonLecture extends scheduleBlock{
 	}
 	
 	public boolean isIntersected(lecture l) {
-		@SuppressWarnings("unchecked")
-		Vector<timeBlock> temp = (Vector<timeBlock>)super.getTime().clone();
-		for(int i=0;i<temp.size();i++) {
-			temp.elementAt(i).setStartTime(temp.elementAt(i).getStartTime()-frontDelay);
+		Vector<timeBlock> temp = new Vector<timeBlock>(super.getTime().size());
+		
+		for(int i=0;i<super.getTime().size();i++) {
+			temp.add(new timeBlock(super.getTime().elementAt(i).getStartTime()-frontDelay,
+					super.getTime().elementAt(i).getEndTime(), super.getTime().elementAt(i).getDay()));
 		}
 		for(int i=0;i<temp.size();i++) {
 			if(l.isIntersected(temp)) {
