@@ -6,18 +6,18 @@ class timeTableMain{
 	static Vector<Vector<lecture>> lectures = new Vector<Vector<lecture>>();
 	static Vector<nonLecture> nonLectures = new Vector<nonLecture>();
 	static Vector<Vector<lecture>> essential = new Vector<Vector<lecture>>();
-	static Vector<timeTable> onlyMajor=new Vector<timeTable>();
+	static Vector<Vector<lecture>> onlyMajor=new Vector<Vector<lecture>>();
+	static Vector<Integer> creditList = new Vector<Integer>();
 	static int mCredit, MCredit, essentialFlag = 0;
 	static float startTime, endTime;
 	
-	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot, int size) {
-		if(credit>=mCredit&&credit<=MCredit) {
-			onlyMajor.add(new timeTable(startTime, endTime, credit, tempLectures, nonLectures));
-		}
-		if(credit>=MCredit) {
+	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) {
+		if(tempLectures.size()==essentialFlag) {
+			onlyMajor.add(tempLectures);
+			creditList.add(credit);
 			return;
 		}
-		for(int i=pivot;i<size;i++) {
+		for(int i=pivot;i<essentialFlag;i++) {
 			for(int j=0;j<essential.elementAt(i).size();j++) {
 				boolean canPush = true;
 				for(int k=0;k<nonLectures.size();k++) {
@@ -38,7 +38,7 @@ class timeTableMain{
 						@SuppressWarnings("unchecked")
 						Vector<lecture> t = (Vector<lecture>)tempLectures.clone();
 						t.add(essential.elementAt(i).elementAt(j));
-						pushMajor(t, credit+essential.elementAt(i).elementAt(j).getCredit(), i+1, size);
+						pushMajor(t, credit+essential.elementAt(i).elementAt(j).getCredit(), i+1);
 					}
 				}
 			}
@@ -52,7 +52,7 @@ class timeTableMain{
 		if(credit>=MCredit) {
 			return;
 		}
-		for(int i=pivot;i<6;i++) {
+		for(int i=pivot;i<lectures.size();i++) {
 			for(int j=0;j<lectures.elementAt(i).size();j++) {
 				boolean canPush = true;
 				for(int k=0;k<nonLectures.size();k++) {
@@ -115,17 +115,18 @@ class timeTableMain{
 				essentialFlag++;
 				essential.add(lectures.elementAt(i));
 			}
+			else {
+				break;
+			}
 		}
 		
-		pushMajor(new Vector<lecture>(), 0, 0, essentialFlag);
+		pushMajor(new Vector<lecture>(), 0, 0);
 		
+		for(int i=0;i<onlyMajor.size();i++) {
+			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag);
+		}
 		
-		
-		
-		
-		pushTimetable(new Vector<lecture>(), 0, 0);
-		
-		for(int i=0;i<timeTables.size();i++) {
+		for(int i=0;i<10;i++) {
 			System.out.println("---Timetable No."+(i+1)+"---");
 			for(int j=0;j<timeTables.elementAt(i).getLectures().size();j++) {
 				timeTables.elementAt(i).getLectures().elementAt(j).showInformation();
