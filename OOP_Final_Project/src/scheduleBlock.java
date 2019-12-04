@@ -1,7 +1,7 @@
 import java.util.Vector;
 
 class scheduleBlock {
-	private Vector<timeBlock> time;//When schedule is going on
+	private Vector<timeBlock> time = new Vector<timeBlock>();//When schedule is going on
 	private String name;//Schedule's name
 	public scheduleBlock(Vector<timeBlock> time, String name) {
 		super();
@@ -37,5 +37,13 @@ class scheduleBlock {
 			}
 		}
 		return false;
+	}
+	public boolean isInStartToEnd(float startTime, float endTime) {
+		for(int i=0;i<time.size();i++) {
+			if(time.elementAt(i).getStartTime()<startTime||time.elementAt(i).getEndTime()>endTime) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

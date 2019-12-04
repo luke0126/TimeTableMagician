@@ -5,8 +5,82 @@ class timeTableMain{
 	static Vector<timeTable> timeTables = new Vector<timeTable>();
 	static Vector<Vector<lecture>> lectures = new Vector<Vector<lecture>>();
 	static Vector<nonLecture> nonLectures = new Vector<nonLecture>();
+	static Vector<Vector<lecture>> essential = new Vector<Vector<lecture>>();
+	static Vector<timeTable> onlyMajor=new Vector<timeTable>();
+	static int mCredit, MCredit, essentialFlag = 0;
+	static float startTime, endTime;
 	
-
+	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot, int size) {
+		if(credit>=mCredit&&credit<=MCredit) {
+			onlyMajor.add(new timeTable(startTime, endTime, credit, tempLectures, nonLectures));
+		}
+		if(credit>=MCredit) {
+			return;
+		}
+		for(int i=pivot;i<size;i++) {
+			for(int j=0;j<essential.elementAt(i).size();j++) {
+				boolean canPush = true;
+				for(int k=0;k<nonLectures.size();k++) {
+					if(nonLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
+						canPush=false;
+						break;
+					}
+					
+				}
+				for(int k=0;k<tempLectures.size();k++) {
+					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
+						canPush=false;
+						break;
+					}
+				}
+				if(canPush) {
+					if(essential.elementAt(i).elementAt(j).isInStartToEnd(startTime, endTime)) {
+						@SuppressWarnings("unchecked")
+						Vector<lecture> t = (Vector<lecture>)tempLectures.clone();
+						t.add(essential.elementAt(i).elementAt(j));
+						pushMajor(t, credit+essential.elementAt(i).elementAt(j).getCredit(), i+1, size);
+					}
+				}
+			}
+		}
+	}
+	
+	public static void pushTimetable(Vector<lecture> tempLectures, int credit, int pivot) {
+		if(credit>=mCredit&&credit<=MCredit) {
+			timeTables.add(new timeTable(startTime, endTime, credit, tempLectures, nonLectures));
+		}
+		if(credit>=MCredit) {
+			return;
+		}
+		for(int i=pivot;i<6;i++) {
+			for(int j=0;j<lectures.elementAt(i).size();j++) {
+				boolean canPush = true;
+				for(int k=0;k<nonLectures.size();k++) {
+					if(nonLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())) {
+						canPush=false;
+						break;
+					}
+					
+				}
+				for(int k=0;k<tempLectures.size();k++) {
+					if(tempLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())) {
+						canPush=false;
+						break;
+					}
+				}
+				if(canPush) {
+					if(lectures.elementAt(i).elementAt(j).isInStartToEnd(startTime, endTime)) {
+						@SuppressWarnings("unchecked")
+						Vector<lecture> t = (Vector<lecture>)tempLectures.clone();
+						t.add(lectures.elementAt(i).elementAt(j));
+						pushTimetable(t, credit+lectures.elementAt(i).elementAt(j).getCredit(), i+1);
+					}
+				}
+			}
+		}
+		return;
+	}
+	
 	public static void main(String[] args) {
 		parsingLecture tool = new parsingLecture();
 		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls 파일 경로
@@ -27,23 +101,37 @@ class timeTableMain{
 			isBreak=etc.isClosed();
 			System.out.print(".");
 		}
-		int mCredit = etc.getmC();
-		int MCredit = etc.getMC();
-		float startTime = (float)etc.getsM()/6+etc.getsH();
-		float endTime = etc.geteH()+(float)etc.geteM()/6;
+		mCredit = etc.getmC();
+		MCredit = etc.getMC();
+		startTime = (float)etc.getsM()/6+etc.getsH();
+		endTime = etc.geteH()+(float)etc.geteM()/6;
 		int grade = etc.getGrade();
 		
-		System.out.println(mCredit);
-		System.out.println(MCredit);
-		System.out.println(startTime);
-		System.out.println(endTime);
-		System.out.println(grade);
 		sortLectures sorter = new sortLectures(grade);
 		Collections.sort(lectures, sorter);
+		
 		for(int i=0;i<lectures.size();i++) {
-			lectures.elementAt(i).elementAt(0).showInformation();
+			if(lectures.elementAt(i).elementAt(0).isMajor()&&lectures.elementAt(i).elementAt(0).getLecture_type()==0) {
+				essentialFlag++;
+				essential.add(lectures.elementAt(i));
+			}
 		}
 		
+		pushMajor(new Vector<lecture>(), 0, 0, essentialFlag);
+		
+		
+		
+		
+		
+		pushTimetable(new Vector<lecture>(), 0, 0);
+		
+		for(int i=0;i<timeTables.size();i++) {
+			System.out.println("---Timetable No."+(i+1)+"---");
+			for(int j=0;j<timeTables.elementAt(i).getLectures().size();j++) {
+				timeTables.elementAt(i).getLectures().elementAt(j).showInformation();
+			}
+			System.out.println(); 
+		}
 	}
 
 }

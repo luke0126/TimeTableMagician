@@ -8,9 +8,9 @@ import javax.swing.JTable;
 
 class timeTable extends JFrame{
 	private float allStartTime, allEndTime;//When all schedule start and end
-	private int minCredit, maxCredit;//Minimal credit, Maximum credit
-	private Vector<lecture> lectures;//All lectures
-	private Vector<nonLecture> nonLectures;//All non lectures
+	private int credit;//Credit
+	private Vector<lecture> lectures = new Vector<lecture>();//All lectures
+	private Vector<nonLecture> nonLectures = new Vector<nonLecture>();//All non lectures
 	
 	private String yourFont = "배달의민족 한나체 Pro";
 	private Color yourColor = new Color(240, 232, 232);
@@ -50,13 +50,12 @@ class timeTable extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	} 
 	
-	public timeTable(float allStartTime, float allEndTime, int minCredit, int maxCredit, Vector<lecture> lectures,
+	public timeTable(float allStartTime, float allEndTime, int credit, Vector<lecture> lectures,
 			Vector<nonLecture> nonLectures) {
 		super();
 		this.allStartTime = allStartTime;
 		this.allEndTime = allEndTime;
-		this.minCredit = minCredit;
-		this.maxCredit = maxCredit;
+		this.credit = credit;
 		this.lectures = lectures;
 		this.nonLectures = nonLectures;
 	}
@@ -82,22 +81,13 @@ class timeTable extends JFrame{
 	}
 
 
-	public int getMinCredit() {
-		return minCredit;
+	public int getCredit() {
+		return credit;
 	}
 
-	public void setMinCredit(int minCredit) {
-		this.minCredit = minCredit;
+	public void setCredit(int credit) {
+		this.credit = credit;
 	}
-
-	public int getMaxCredit() {
-		return maxCredit;
-	}
-
-	public void setMaxCredit(int maxCredit) {
-		this.maxCredit = maxCredit;
-	}
-
 
 	public Vector<lecture> getLectures() {
 		return lectures;
