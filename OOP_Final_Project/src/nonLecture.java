@@ -21,4 +21,18 @@ class nonLecture extends scheduleBlock{
 		temp.add(tB);
 		super.setTime(temp);
 	}
+	
+	public boolean isIntersected(lecture l) {
+		@SuppressWarnings("unchecked")
+		Vector<timeBlock> temp = (Vector<timeBlock>)super.getTime().clone();
+		for(int i=0;i<temp.size();i++) {
+			temp.elementAt(i).setStartTime(temp.elementAt(i).getStartTime()-frontDelay);
+		}
+		for(int i=0;i<temp.size();i++) {
+			if(l.isIntersected(temp)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

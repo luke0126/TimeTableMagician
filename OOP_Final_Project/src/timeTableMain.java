@@ -21,11 +21,10 @@ class timeTableMain{
 			for(int j=0;j<essential.elementAt(i).size();j++) {
 				boolean canPush = true;
 				for(int k=0;k<nonLectures.size();k++) {
-					if(nonLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
+					if(nonLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j))) {
 						canPush=false;
 						break;
 					}
-					
 				}
 				for(int k=0;k<tempLectures.size();k++) {
 					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
@@ -47,7 +46,9 @@ class timeTableMain{
 	
 	public static void pushTimetable(Vector<lecture> tempLectures, int credit, int pivot) {
 		if(credit>=mCredit&&credit<=MCredit) {
-			timeTables.add(new timeTable(startTime, endTime, credit, tempLectures, nonLectures));
+			timeTables.add(new timeTable(credit, tempLectures, nonLectures));
+			timeTables.lastElement().computeEndtime();
+			timeTables.lastElement().computeStarttime();
 		}
 		if(credit>=MCredit) {
 			return;
@@ -56,7 +57,7 @@ class timeTableMain{
 			for(int j=0;j<lectures.elementAt(i).size();j++) {
 				boolean canPush = true;
 				for(int k=0;k<nonLectures.size();k++) {
-					if(nonLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())) {
+					if(nonLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j))) {
 						canPush=false;
 						break;
 					}
@@ -125,14 +126,14 @@ class timeTableMain{
 		for(int i=0;i<onlyMajor.size();i++) {
 			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag);
 		}
-		
 		for(int i=0;i<10;i++) {
 			System.out.println("---Timetable No."+(i+1)+"---");
 			for(int j=0;j<timeTables.elementAt(i).getLectures().size();j++) {
 				timeTables.elementAt(i).getLectures().elementAt(j).showInformation();
 			}
-			System.out.println(); 
+			System.out.println();
 		}
+		timeTables.elementAt(0).callWindow();
+		
 	}
-
 }

@@ -122,7 +122,7 @@ class nonLectureWindow extends JFrame{
 		c.add(l5);
 		
 		JComboBox<String> dMin = new JComboBox<String>(m);
-		eMin.addActionListener(new ActionListener() {
+		dMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource(); 
@@ -174,7 +174,7 @@ class nonLectureWindow extends JFrame{
 					}
 					else {
 						String inform="*"+tempText;
-						nonLecture n = new nonLecture(new Vector<timeBlock>(), tempText, dM);
+						nonLecture n = new nonLecture(new Vector<timeBlock>(), tempText, (float)dM/6);
 						inform+=" "+h[sH]+" "+m[sM]+"~"+h[eH]+" "+m[eM];
 						for(int i=0;i<7;i++) {
 							if(dayBox[i].isSelected()) {
