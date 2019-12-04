@@ -1,5 +1,8 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -12,14 +15,17 @@ class timeTable extends JFrame{
 	private Vector<lecture> lectures = new Vector<lecture>();//All lectures
 	private Vector<nonLecture> nonLectures = new Vector<nonLecture>();//All non lectures
 	
-	private boolean isReturn = false;
+	private int prevOrNext = 0;
+	private boolean isReturn = false; //Is window is closed
 	private String yourFont = "배달의민족 한나체 Pro";
 	private Color yourColor = new Color(240, 232, 232);
 	private String[] day = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 	private String[] timeInfo = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시",
 						"8시\n0교시", "9시\n1교시", "10시\n2교시", "11시\n3교시", "12시\n4교시", "13시\n5교시",
 					"14시\n6교시", "15시\n7교시", "16시\n8교시", "17시\n9교시", "18시\n10교시", "19시\n11교시", "20시", "21시", "22시", "23시"};
-	public void callWindow(){
+	public void callWindow(){ //Open timetable
+		prevOrNext=0;
+		isReturn = false;
 		int rowNum = allEndTime - allStartTime + 1;
 		int width = 1560, height = 900;
 		getContentPane().removeAll();
@@ -29,7 +35,7 @@ class timeTable extends JFrame{
 		c.setLayout(null);
 		c.setBackground(yourColor);
 		
-		JButton[] dayBtn = new JButton[7];
+		JButton[] dayBtn = new JButton[7]; //Show day on top
 		for(int i=0;i<7;i++) {
 			dayBtn[i]=new JButton(day[i]);
 			dayBtn[i].setBounds(20 + 195*(i+1), 20, 195, height/rowNum);
@@ -37,15 +43,25 @@ class timeTable extends JFrame{
 			c.add(dayBtn[i]);
 		}
 		
-		JButton[] timeBtn = new JButton[24];
+		JButton[] timeBtn = new JButton[24]; //Show time on left
 		for(int i=allStartTime;i<allEndTime;i++) {
 			timeBtn[i]=new JButton(timeInfo[i]);
 			timeBtn[i].setBounds(20, 20+(height/rowNum)*(i+1 - allStartTime), 195, height/rowNum);
 			timeBtn[i].setBackground(new Color(255, 255, 255));
 			c.add(timeBtn[i]);
 		}
+
+		JButton nextBtn = new JButton("다음");
+		nextBtn.setBounds(1620, 20, 160, 120);
+		nextBtn.setBackground(new Color(255, 255, 255));
+		c.add(nextBtn);
 		
-		Vector<JButton> sBtn = new Vector<JButton>();
+		JButton prevBtn = new JButton("이전");
+		prevBtn.setBounds(1620, 800, 160, 120);
+		prevBtn.setBackground(new Color(255, 255, 255));
+		c.add(prevBtn);
+		
+		Vector<JButton> sBtn = new Vector<JButton>(); //Show schedule on that time
 		for(int i=0;i<lectures.size();i++) {
 			Color lc = new Color(192+(int)(Math.random()*63), 192+(int)(Math.random()*63), 192+(int)(Math.random()*63));
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
@@ -75,10 +91,24 @@ class timeTable extends JFrame{
 		tt.setGridColor(new Color(200, 200, 200));
 		tt.setRowHeight(900/rowNum);
 		c.add(tt);
-
 		
-		setSize(1620, 1000);
+		setSize(1820, 1000);
 		setVisible(true);
+		
+		prevBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isReturn = true;
+				prevOrNext=-1;
+				dispose();
+			}
+		});
+		nextBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isReturn = true;
+				prevOrNext=1;
+				dispose();
+			}
+		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	} 
@@ -147,7 +177,7 @@ class timeTable extends JFrame{
 	public boolean isClosed() {
 		return isReturn;
 	}
-	public void computeStarttime() {
+	public void computeStarttime() { //Compute real start time
 		float min=24;
 		for(int i=0;i<lectures.size();i++) {
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
@@ -167,7 +197,7 @@ class timeTable extends JFrame{
 			allStartTime=0;
 		}
 	}
-	public void computeEndtime() {
+	public void computeEndtime() { //Compute real end time
 		float max=0;
 		for(int i=0;i<lectures.size();i++) {
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
@@ -186,5 +216,8 @@ class timeTable extends JFrame{
 		if(allEndTime>24) {
 			allEndTime=24;
 		}
+	}
+	public int selectWay() {
+		return prevOrNext;
 	}
 }

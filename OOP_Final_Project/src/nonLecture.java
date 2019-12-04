@@ -22,7 +22,7 @@ class nonLecture extends scheduleBlock{
 		super.setTime(temp);
 	}
 	
-	public boolean isIntersected(lecture l) {
+	public boolean isIntersected(lecture l) { //Is intersected between lecture and nonLecture
 		Vector<timeBlock> temp = new Vector<timeBlock>(super.getTime().size());
 		
 		for(int i=0;i<super.getTime().size();i++) {

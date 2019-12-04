@@ -11,7 +11,7 @@ class timeTableMain{
 	static int mCredit, MCredit, essentialFlag = 0;
 	static float startTime, endTime;
 	
-	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) {
+	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) { //Push essential major
 		if(tempLectures.size()==essentialFlag) {
 			onlyMajor.add(tempLectures);
 			creditList.add(credit);
@@ -44,7 +44,7 @@ class timeTableMain{
 		}
 	}
 	
-	public static void pushTimetable(Vector<lecture> tempLectures, int credit, int pivot) {
+	public static void pushTimetable(Vector<lecture> tempLectures, int credit, int pivot) { //Push lectures
 		if(credit>=mCredit&&credit<=MCredit) {
 			timeTables.add(new timeTable(credit, tempLectures, nonLectures));
 			timeTables.lastElement().computeEndtime();
@@ -87,7 +87,7 @@ class timeTableMain{
 		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls 파일 경로
 		System.out.println(lectures.size());
 		nonLectureWindow w = new nonLectureWindow();
-		w.callWindow(new Vector<String>());
+		w.callWindow(new Vector<String>()); //Push nonLecture
 		boolean isBreak = false;
 		while(!isBreak) {
 			isBreak = w.isClosed();
@@ -95,7 +95,7 @@ class timeTableMain{
 		}
 		
 		nonLectures = w.getNonLecture();
-		etcSettingWindow etc = new etcSettingWindow();
+		etcSettingWindow etc = new etcSettingWindow(); //Setting time, credit, etc
 		etc.callWindow();
 		isBreak = false;
 		while(!isBreak) {
@@ -108,10 +108,10 @@ class timeTableMain{
 		endTime = etc.geteH()+(float)etc.geteM()/6;
 		int grade = etc.getGrade();
 		
-		sortLectures sorter = new sortLectures(grade);
+		sortLectures sorter = new sortLectures(grade); //Sort...
 		Collections.sort(lectures, sorter);
 		
-		for(int i=0;i<lectures.size();i++) {
+		for(int i=0;i<lectures.size();i++) { //Check how many essential lecture vector has
 			if(lectures.elementAt(i).elementAt(0).isMajor()&&lectures.elementAt(i).elementAt(0).getLecture_type()==0) {
 				essentialFlag++;
 				essential.add(lectures.elementAt(i));
@@ -120,20 +120,31 @@ class timeTableMain{
 				break;
 			}
 		}
+		
 
-		pushMajor(new Vector<lecture>(), 0, 0);
+		pushMajor(new Vector<lecture>(), 0, 0); //Push essential lectures
 		
 		for(int i=0;i<onlyMajor.size();i++) {
-			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag);
+			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag); //Make timetable by backtracking
 		}
-		for(int i=0;i<10;i++) {
-			System.out.println("---Timetable No."+(i+1)+"---");
-			for(int j=0;j<timeTables.elementAt(i).getLectures().size();j++) {
-				timeTables.elementAt(i).getLectures().elementAt(j).showInformation();
-			}
-			System.out.println();
-		}
-		timeTables.elementAt(0).callWindow();
 		
+		int index = 0;		
+		while(true) {
+			isBreak = false;
+			timeTables.elementAt(index).callWindow();
+			while(!isBreak) {
+				if(timeTables.elementAt(index).isClosed()) {
+					isBreak = true;
+					index = index + timeTables.elementAt(index).selectWay();
+					if(index<=0) {
+						index=0;
+					}
+					if(index>=timeTables.size()) {
+						index--;
+					}
+				}
+			}
+			
+		}
 	}
 }

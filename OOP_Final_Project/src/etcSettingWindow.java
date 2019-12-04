@@ -42,7 +42,7 @@ class etcSettingWindow extends JFrame{
 		l2.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l2);
 		
-		JComboBox<String> sHour = new JComboBox<String>(h);
+		JComboBox<String> sHour = new JComboBox<String>(h); //Set start time
 		sHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -71,7 +71,7 @@ class etcSettingWindow extends JFrame{
 		c.add(l0);
 		
 		
-		JComboBox<String> eHour = new JComboBox<String>(h);
+		JComboBox<String> eHour = new JComboBox<String>(h); //Set end time
 		eHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -108,7 +108,7 @@ class etcSettingWindow extends JFrame{
 		l5.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l5);
 		
-		JComboBox<String> mCredit = new JComboBox<String>(credit);
+		JComboBox<String> mCredit = new JComboBox<String>(credit); //Set credit
 		mCredit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -130,7 +130,7 @@ class etcSettingWindow extends JFrame{
 		MCredit.setBounds(180, 110, 70, 20);
 		c.add(MCredit);
 		
-		JComboBox<String> grade = new JComboBox<String>(gradeList);
+		JComboBox<String> grade = new JComboBox<String>(gradeList); //Set grade(level)
 		grade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -148,10 +148,10 @@ class etcSettingWindow extends JFrame{
 		
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(mC>MC) {
+				if(mC>MC) { //Error on credit setting
 					JOptionPane.showMessageDialog(c, "학점을 확인해 주세요!");
 				}
-				else if(sH*6+sM>=eH*6+eM) {
+				else if(sH*6+sM>=eH*6+eM) { //Error on time setting
 					JOptionPane.showMessageDialog(c, "시간을 확인해 주세요!");
 				}
 				else {

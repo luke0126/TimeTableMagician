@@ -24,7 +24,7 @@ class scheduleBlock {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isIntersected(Vector<timeBlock> other) {
+	public boolean isIntersected(Vector<timeBlock> other) { //Is intersected with other schedule's timeblock
 		for(int i=0;i<other.size();i++) {
 			for(int j=0;j<this.time.size();j++) {
 				if(other.elementAt(i).getDay()==this.time.elementAt(j).getDay()&&

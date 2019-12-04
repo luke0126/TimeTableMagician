@@ -19,7 +19,7 @@ class lecture extends scheduleBlock{
 		this.code = code;
 	}
 
-	public void showInformation() {
+	public void showInformation() { //Just for debugging
 		System.out.println("강의 명: "+super.getName()+", 교수님: "+this.professor+", 학점: "+this.credit+", 전공: "+this.isMajor+", 강의유형: "+this.lecture_type+", 학년: "+this.level);
 		System.out.println("--강의시간--");
 		for(int i=0;i<super.getTime().size();i++) {

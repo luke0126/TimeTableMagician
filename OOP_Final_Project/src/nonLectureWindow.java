@@ -158,7 +158,7 @@ class nonLectureWindow extends JFrame{
 				String tempText;
 				tempText = sName.getText();
 				tempText=tempText.trim();
-				if(tempText.compareTo("")==0) {
+				if(tempText.compareTo("")==0) { //If schedule is null
 					JOptionPane.showMessageDialog(c, "이름이 없는 일정입니다!");
 				}
 				else {
@@ -169,7 +169,7 @@ class nonLectureWindow extends JFrame{
 							break;
 						}
 					}
-					if(!isChecked) {
+					if(!isChecked) { //If schedule has no day
 						JOptionPane.showMessageDialog(c, "요일을 확인해 주세요!");
 					}
 					else {
@@ -192,7 +192,7 @@ class nonLectureWindow extends JFrame{
 							}
 						}
 						boolean isBreak = false;
-						for(int i=0;i<nonLectures.size();i++) {
+						for(int i=0;i<nonLectures.size();i++) { //If schedule is intersected with others
 							if(nonLectures.elementAt(i).isIntersected(n.getTime())) {
 								JOptionPane.showMessageDialog(c, "시간이 겹칩니다!");
 								isBreak = true;

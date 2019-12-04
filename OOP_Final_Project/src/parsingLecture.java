@@ -8,7 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class parsingLecture {
-	public Vector<Vector<lecture>> getLecture(String route) {
+	public Vector<Vector<lecture>> getLecture(String route) { //Get lectures information from xls
 		Vector<Vector<lecture>> lectures = new Vector<Vector<lecture>>();
 		try {
 			FileInputStream xls = new FileInputStream(route);
