@@ -4,7 +4,7 @@ class lecture extends scheduleBlock{
 	private String professor;//Professor's name
 	private int credit;//3, 2 or 1
 	private boolean isMajor;//true = major, false = nonMajor
-	private int lecture_type;//true->0 : 전공필수, true->1 : 전공, true->2 : 전공기초
+	private int lecture_type;//true->0 : 전공필수, true->1 : 전공기초, true->2 : 전공
 	//false->0 : 필수교양, false->1, 2, 3, 4, 5 : 핵심교양 시리즈
 	private int level; //0->공통, 1, 2, 3, 4->1학년 2학년 3학년 4학년
 	private String code;

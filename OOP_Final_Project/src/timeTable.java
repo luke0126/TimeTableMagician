@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 class timeTable extends JFrame{
@@ -67,12 +68,30 @@ class timeTable extends JFrame{
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
 				sBtn.add(new JButton(lectures.elementAt(i).getName()));
 				timeBlock tB = lectures.elementAt(i).getTime().elementAt(j);
-				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1)
-						, 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)), 195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
+				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1), 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)),
+						195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
 				sBtn.lastElement().setBackground(lc);
 				c.add(sBtn.lastElement());
 			}
 		}
+		int lectureSize = sBtn.size();
+		int index=0;
+		for(int i=0;i<lectures.size();i++) {
+			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
+				lecture l = lectures.elementAt(i);
+				timeBlock t = l.getTime().elementAt(j);
+				sBtn.elementAt(index).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JOptionPane.showMessageDialog(c, l.getName()+"\n"+
+					(l.isMajor()?"전공":"교양")+(l.isMajor()?(l.getLecture_type()==0?"필수":l.getLecture_type()==1?"기초":""):"")+
+					"\n강의시간: "+t.getStartTime()+"~"+t.getEndTime());	
+					}
+				});
+				index++;
+			}
+		}
+		
+		
 		for(int i=0;i<nonLectures.size();i++) {
 			Color lc = new Color(192+(int)(Math.random()*63), 192+(int)(Math.random()*63), 192+(int)(Math.random()*63));
 			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
