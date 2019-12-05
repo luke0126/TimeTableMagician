@@ -12,11 +12,7 @@ class timeTableMain{
 	static float startTime, endTime;
 	
 	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) { //Push essential major
-		if(tempLectures.size()==essentialFlag) {
-			onlyMajor.add(tempLectures);
-			creditList.add(credit);
-			return;
-		}
+
 		for(int i=pivot;i<essentialFlag;i++) {
 			for(int j=0;j<essential.elementAt(i).size();j++) {
 				boolean canPush = true;
@@ -27,7 +23,8 @@ class timeTableMain{
 					}
 				}
 				for(int k=0;k<tempLectures.size();k++) {
-					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
+					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())||
+							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(essential.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
 						canPush=false;
 						break;
 					}
@@ -42,6 +39,9 @@ class timeTableMain{
 				}
 			}
 		}
+		onlyMajor.add(tempLectures);
+		creditList.add(credit);
+		return;
 	}
 	
 	public static void pushTimetable(Vector<lecture> tempLectures, int credit, int pivot) { //Push lectures
@@ -64,7 +64,8 @@ class timeTableMain{
 					
 				}
 				for(int k=0;k<tempLectures.size();k++) {
-					if(tempLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())) {
+					if(tempLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())||
+							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(lectures.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
 						canPush=false;
 						break;
 					}
@@ -86,14 +87,21 @@ class timeTableMain{
 		parsingLecture tool = new parsingLecture();
 		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls 파일 경로
 		System.out.println(lectures.size());
+		
+		selectLecture sL = new selectLecture();
+		sL.callWindow(lectures);
+		boolean isBreak = false;
+		while(!isBreak) {
+			isBreak = sL.isClosed();
+			System.out.print(".");
+		}
 		nonLectureWindow w = new nonLectureWindow();
 		w.callWindow(new Vector<String>()); //Push nonLecture
-		boolean isBreak = false;
+		isBreak=false;
 		while(!isBreak) {
 			isBreak = w.isClosed();
 			System.out.print(".");
 		}
-		
 		nonLectures = w.getNonLecture();
 		etcSettingWindow etc = new etcSettingWindow(); //Setting time, credit, etc
 		etc.callWindow();
@@ -120,11 +128,15 @@ class timeTableMain{
 				break;
 			}
 		}
+		int selectedCredit=0;
+		for(int i=0;i<sL.getLectures().size();i++) {
+			selectedCredit+=sL.getLectures().elementAt(i).getCredit();
+		}
 		
 
-		pushMajor(new Vector<lecture>(), 0, 0); //Push essential lectures
+		pushMajor(sL.getLectures(), selectedCredit, 0); //Push essential lectures
 		
-		for(int i=0;i<onlyMajor.size();i++) {
+		for(int i=0;i<(onlyMajor.size()/3<5?onlyMajor.size()/3:5);i++) {
 			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag); //Make timetable by backtracking
 		}
 		

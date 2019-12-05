@@ -21,9 +21,11 @@ class timeTable extends JFrame{
 	private String yourFont = "배달의민족 한나체 Pro";
 	private Color yourColor = new Color(240, 232, 232);
 	private String[] day = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
-	private String[] timeInfo = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시",
-						"8시\n0교시", "9시\n1교시", "10시\n2교시", "11시\n3교시", "12시\n4교시", "13시\n5교시",
-					"14시\n6교시", "15시\n7교시", "16시\n8교시", "17시\n9교시", "18시\n10교시", "19시\n11교시", "20시", "21시", "22시", "23시"};
+	 private String[] timeInfo = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시",
+			 "<html> 8시<br />0교시</html>", "<html> 9시<br />1교시</html>", "<html> 10시<br />2교시</html>", "<html> 11시<br />3교시</html>", 
+			 "<html> 12시<br />4교시</html>", "<html> 13시<br />5교시</html>", "<html> 14시<br />6교시</html>", "<html> 15시<br />7교시</html>", 
+			 "<html> 16시<br />8교시</html>", "<html> 17시<br />9교시</html>", "<html> 18시<br />10교시</html>", "<html> 19시<br />11교시</html>", 
+			 "20시", "21시", "22시", "23시"};
 	public void callWindow(){ //Open timetable
 		prevOrNext=0;
 		isReturn = false;
@@ -49,6 +51,7 @@ class timeTable extends JFrame{
 			timeBtn[i]=new JButton(timeInfo[i]);
 			timeBtn[i].setBounds(20, 20+(height/rowNum)*(i+1 - allStartTime), 195, height/rowNum);
 			timeBtn[i].setBackground(new Color(255, 255, 255));
+			
 			c.add(timeBtn[i]);
 		}
 
