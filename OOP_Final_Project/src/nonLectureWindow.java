@@ -200,7 +200,7 @@ class nonLectureWindow extends JFrame{
 							}
 						}
 						for(int i=0;i<lectures.size();i++) { //If schedule is intersected with lectures
-							if(lectures.elementAt(i).isIntersected(n.getTime())) {
+							if(n.isIntersected(lectures.elementAt(i))) {
 								JOptionPane.showMessageDialog(c, "다른 강의와 시간이 겹칩니다!");
 								isBreak = true;
 								break;

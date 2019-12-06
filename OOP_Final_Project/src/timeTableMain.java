@@ -8,7 +8,7 @@ class timeTableMain{
 	static Vector<Vector<lecture>> essential = new Vector<Vector<lecture>>();
 	static Vector<Vector<lecture>> onlyMajor=new Vector<Vector<lecture>>();
 	static Vector<Integer> creditList = new Vector<Integer>();
-	static int mCredit, MCredit, essentialFlag = 0;
+	static int mCredit, MCredit, essentialFlag = 0, selectedLecturesNum=0;
 	static float startTime, endTime;
 	
 	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) { //Push essential major
@@ -87,20 +87,19 @@ class timeTableMain{
 	
 	public static void main(String[] args) {
 		
-		
-		
 		parsingLecture tool = new parsingLecture();
 		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls 파일 경로
 		System.out.println(lectures.size());
 		
-		selectLecture sL = new selectLecture();
-		sL.callWindow(lectures);
+		selectLecture sL = new selectLecture(); 
+		sL.callWindow(lectures);//무조건 들어야 하는 강의 선택하기
 		boolean isBreak = false;
 		while(!isBreak) {
 			isBreak = sL.isClosed();
 			System.out.print(".");
 		}
 		nonLectureWindow w = new nonLectureWindow();
+		selectedLecturesNum=sL.getLectures().size();
 		w.callWindow(new Vector<String>(), sL.getLectures()); //Push nonLecture
 		isBreak=false;
 		while(!isBreak) {
