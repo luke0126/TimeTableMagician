@@ -18,7 +18,6 @@ class timeTable extends JFrame{
 	
 	private int prevOrNext = 0;
 	private boolean isReturn = false; //Is window is closed
-	private String yourFont = "배달의민족 한나체 Pro";
 	private Color yourColor = new Color(240, 232, 232);
 	private String[] day = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 	 private String[] timeInfo = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시",
@@ -87,7 +86,7 @@ class timeTable extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						JOptionPane.showMessageDialog(c, l.getName()+"\n"+
 					(l.isMajor()?"전공":"교양")+(l.isMajor()?(l.getLecture_type()==0?"필수":l.getLecture_type()==1?"기초":""):"")+
-					"\n강의시간: "+t.getStartTime()+"~"+t.getEndTime());	
+					"(교수: "+l.getProfessor()+")\n강의시간: "+t.getStartTime()+"~"+t.getEndTime());	
 					}
 				});
 				index++;
@@ -106,6 +105,23 @@ class timeTable extends JFrame{
 				c.add(sBtn.lastElement());
 			}
 		}
+
+		
+		for(int i=0;i<nonLectures.size();i++) {
+			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
+				nonLecture l = nonLectures.elementAt(i);
+				timeBlock t = l.getTime().elementAt(j);
+				sBtn.elementAt(index).addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						JOptionPane.showMessageDialog(c, l.getName()+"\n"+day[t.getDay()]+t.getStartTime()+"~"+t.getEndTime()+"\n이동시간: "+(int)(l.getFrontDelay()*60)+"분");	
+					}
+				});
+				index++;
+			}
+		}
+		
+		
+		
 		
 		JTable tt = new JTable(rowNum, 8);
 		tt.setBounds(20, 20, width, height);

@@ -12,7 +12,9 @@ class timeTableMain{
 	static float startTime, endTime;
 	
 	public static void pushMajor(Vector<lecture> tempLectures, int credit, int pivot) { //Push essential major
-
+		if(onlyMajor.size()>5) {
+			return;
+		}
 		for(int i=pivot;i<essentialFlag;i++) {
 			for(int j=0;j<essential.elementAt(i).size();j++) {
 				boolean canPush = true;
@@ -84,6 +86,9 @@ class timeTableMain{
 	}
 	
 	public static void main(String[] args) {
+		
+		
+		
 		parsingLecture tool = new parsingLecture();
 		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls 파일 경로
 		System.out.println(lectures.size());
@@ -96,7 +101,7 @@ class timeTableMain{
 			System.out.print(".");
 		}
 		nonLectureWindow w = new nonLectureWindow();
-		w.callWindow(new Vector<String>()); //Push nonLecture
+		w.callWindow(new Vector<String>(), sL.getLectures()); //Push nonLecture
 		isBreak=false;
 		while(!isBreak) {
 			isBreak = w.isClosed();
@@ -118,9 +123,9 @@ class timeTableMain{
 		
 		sortLectures sorter = new sortLectures(grade); //Sort...
 		Collections.sort(lectures, sorter);
-		
 		for(int i=0;i<lectures.size();i++) { //Check how many essential lecture vector has
-			if(lectures.elementAt(i).elementAt(0).isMajor()&&lectures.elementAt(i).elementAt(0).getLecture_type()==0) {
+			if(lectures.elementAt(i).elementAt(0).isMajor()&&lectures.elementAt(i).elementAt(0).getLecture_type()==0||
+					lectures.elementAt(i).elementAt(0).getLecture_type()==1) {//Essential means basic course or essential course
 				essentialFlag++;
 				essential.add(lectures.elementAt(i));
 			}
@@ -136,27 +141,33 @@ class timeTableMain{
 
 		pushMajor(sL.getLectures(), selectedCredit, 0); //Push essential lectures
 		
-		for(int i=0;i<(onlyMajor.size()/3<5?onlyMajor.size()/3:5);i++) {
+		for(int i=0;i<onlyMajor.size();i++) {
 			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essentialFlag); //Make timetable by backtracking
 		}
 		
-		int index = 0;		
-		while(true) {
-			isBreak = false;
-			timeTables.elementAt(index).callWindow();
-			while(!isBreak) {
-				if(timeTables.elementAt(index).isClosed()) {
-					isBreak = true;
-					index = index + timeTables.elementAt(index).selectWay();
-					if(index<=0) {
-						index=0;
-					}
-					if(index>=timeTables.size()) {
-						index--;
+		int index = 0;	
+		if(timeTables.size()==0) {//If timetable isn't made
+			System.out.println("Error");
+		}
+		else {
+			while(true) {
+				isBreak = false;
+				timeTables.elementAt(index).callWindow();
+				while(!isBreak) {
+					if(timeTables.elementAt(index).isClosed()) {
+						isBreak = true;
+						index = index + timeTables.elementAt(index).selectWay();
+						if(index<=0) {
+							index=0;
+						}
+						if(index>=timeTables.size()) {
+							index--;
+						}
 					}
 				}
-			}
-			
+				
+			}	
 		}
+		
 	}
 }

@@ -25,7 +25,7 @@ class nonLectureWindow extends JFrame{
 	private boolean isReturn = false;
 	
 	
-	public void callWindow(Vector<String> sNameList){
+	public void callWindow(Vector<String> sNameList, Vector<lecture> lectures){
 		getContentPane().removeAll();
 		this.refreshGUI();
 		setTitle("Timetable Magician");
@@ -173,7 +173,7 @@ class nonLectureWindow extends JFrame{
 						JOptionPane.showMessageDialog(c, "요일을 확인해 주세요!");
 					}
 					else {
-						String inform="*"+tempText;
+						String inform="* "+tempText;
 						nonLecture n = new nonLecture(new Vector<timeBlock>(), tempText, (float)dM/6);
 						inform+=" "+h[sH]+" "+m[sM]+"~"+h[eH]+" "+m[eM];
 						for(int i=0;i<7;i++) {
@@ -194,7 +194,14 @@ class nonLectureWindow extends JFrame{
 						boolean isBreak = false;
 						for(int i=0;i<nonLectures.size();i++) { //If schedule is intersected with others
 							if(nonLectures.elementAt(i).isIntersected(n.getTime())) {
-								JOptionPane.showMessageDialog(c, "시간이 겹칩니다!");
+								JOptionPane.showMessageDialog(c, "다른 스케줄과 시간이 겹칩니다!");
+								isBreak = true;
+								break;
+							}
+						}
+						for(int i=0;i<lectures.size();i++) { //If schedule is intersected with lectures
+							if(lectures.elementAt(i).isIntersected(n.getTime())) {
+								JOptionPane.showMessageDialog(c, "다른 강의와 시간이 겹칩니다!");
 								isBreak = true;
 								break;
 							}
@@ -202,7 +209,7 @@ class nonLectureWindow extends JFrame{
 						if(!isBreak) {
 							sNameList.add(inform);
 							nonLectures.add(n);
-							callWindow(sNameList);
+							callWindow(sNameList, lectures);
 							JOptionPane.showMessageDialog(c, "추가되었습니다!");	
 						}
 						
