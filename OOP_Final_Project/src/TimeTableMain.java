@@ -88,11 +88,11 @@ class timeTableMain{
 	public static void main(String[] args) {
 		
 		parsingLecture tool = new parsingLecture();
-		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls ÆÄÀÏ °æ·Î
+		lectures = tool.getLecture("C:\\Users\\solji\\eclipse-workspace\\OOP_Final_Project\\src\\TEST.xls");//.xls íŒŒì¼ ê²½ë¡œ
 		System.out.println(lectures.size());
 		
 		selectLecture sL = new selectLecture(); 
-		sL.callWindow(lectures);//¹«Á¶°Ç µé¾î¾ß ÇÏ´Â °­ÀÇ ¼±ÅÃÇÏ±â
+		sL.callWindow(lectures);//ë¬´ì¡°ê±´ ë“¤ì–´ì•¼ í•˜ëŠ” ê°•ì˜ ì„ íƒí•˜ê¸°
 		boolean isBreak = false;
 		while(!isBreak) {
 			isBreak = sL.isClosed();
