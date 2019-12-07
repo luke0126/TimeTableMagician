@@ -4,28 +4,23 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.util.Vector;
 
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTextField;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-class nonLectureWindow extends JFrame{
-	private String[] day = {"ì›”ìš”ì¼", "í™”ìš”ì¼", "ìˆ˜ìš”ì¼", "ëª©ìš”ì¼", "ê¸ˆìš”ì¼", "í† ìš”ì¼", "ì¼ìš”ì¼"};
-	private String[] h = {"0ì‹œ", "1ì‹œ", "2ì‹œ", "3ì‹œ", "4ì‹œ", "5ì‹œ", "6ì‹œ", "7ì‹œ", "8ì‹œ", "9ì‹œ", "10ì‹œ", "11ì‹œ", "12ì‹œ"
-			, "13ì‹œ","14ì‹œ", "15ì‹œ", "16ì‹œ", "17ì‹œ", "18ì‹œ", "19ì‹œ","20ì‹œ", "21ì‹œ","22ì‹œ", "23ì‹œ"};
-	private String[] m = {"0ë¶„", "10ë¶„", "20ë¶„", "30ë¶„", "40ë¶„", "50ë¶„"};
-	private Vector<nonLecture> nonLectures = new Vector<nonLecture>();
-	private String yourFont = "ë°°ë‹¬ì˜ë¯¼ì¡± í•œë‚˜ì²´ Pro";
+class NonLectureWindow extends JFrame{
+	private String[] day = {"¿ù¿äÀÏ", "È­¿äÀÏ", "¼ö¿äÀÏ", "¸ñ¿äÀÏ", "±İ¿äÀÏ", "Åä¿äÀÏ", "ÀÏ¿äÀÏ"};
+	private String[] h = {"0½Ã", "1½Ã", "2½Ã", "3½Ã", "4½Ã", "5½Ã", "6½Ã", "7½Ã", "8½Ã", "9½Ã", "10½Ã", "11½Ã", "12½Ã"
+			, "13½Ã","14½Ã", "15½Ã", "16½Ã", "17½Ã", "18½Ã", "19½Ã","20½Ã", "21½Ã","22½Ã", "23½Ã"};
+	private String[] m = {"0ºĞ", "10ºĞ", "20ºĞ", "30ºĞ", "40ºĞ", "50ºĞ"};
+	private Vector<NonLecture> nonLectures = new Vector<NonLecture>();
+	private String yourFont = "¹è´ŞÀÇ¹ÎÁ· ÇÑ³ªÃ¼ Pro";
 	private Color yourColor = new Color(240, 232, 232);
 	private int sH, sM, eH, eM, dM;
 	private boolean isReturn = false;
+	private Vector<Vector<Lecture>> lectures;
 	
-	
-	public void callWindow(Vector<String> sNameList, Vector<lecture> lectures){
+	public NonLectureWindow(Vector<Lecture> selectedlectures, Vector<Vector<Lecture>> lectures) {
+		this.lectures = lectures;
 		getContentPane().removeAll();
 		this.refreshGUI();
 		setTitle("Timetable Magician");
@@ -33,7 +28,7 @@ class nonLectureWindow extends JFrame{
 		c.setLayout(null);
 		c.setBackground(yourColor);
 		
-		JLabel l1 = new JLabel("ì¼ì • ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”");
+		JLabel l1 = new JLabel("ÀÏÁ¤ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä");
 		l1.setBounds(20, 10, 500, 20);
 		l1.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l1);
@@ -44,7 +39,7 @@ class nonLectureWindow extends JFrame{
 		sName.setHorizontalAlignment(JTextField.CENTER);
 		c.add(sName);
 		
-		JLabel l2 = new JLabel("í•´ë‹¹ë˜ëŠ” ìš”ì¼ì— ì²´í¬í•´ ì£¼ì„¸ìš”");
+		JLabel l2 = new JLabel("ÇØ´çµÇ´Â ¿äÀÏ¿¡ Ã¼Å©ÇØ ÁÖ¼¼¿ä");
 		l2.setBounds(20, 115, 500, 20);
 		l2.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l2);
@@ -60,7 +55,7 @@ class nonLectureWindow extends JFrame{
 		
 		
 		
-		JLabel l3 = new JLabel("ì‹œê°„ì„ ì„¤ì •í•´ ì£¼ì„¸ìš”");
+		JLabel l3 = new JLabel("½Ã°£À» ¼³Á¤ÇØ ÁÖ¼¼¿ä");
 		l3.setBounds(20, 190, 500, 20);
 		l3.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l3);
@@ -116,7 +111,7 @@ class nonLectureWindow extends JFrame{
 		eMin.setBounds(330, 230, 70, 20);
 		c.add(eMin);
 		
-		JLabel l5 = new JLabel("ì´ë™ì‹œê°„");
+		JLabel l5 = new JLabel("ÀÌµ¿½Ã°£");
 		l5.setBounds(450, 190, 150, 20);
 		l5.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l5);
@@ -132,34 +127,36 @@ class nonLectureWindow extends JFrame{
 		dMin.setBounds(450, 230, 70, 20);
 		c.add(dMin);
 		
-		JButton addS = new JButton("ì¶”ê°€");
+		JButton addS = new JButton("Ãß°¡");
 		addS.setBounds(20, 300, 80, 50);
 		addS.setFont(new Font(yourFont, Font.PLAIN, 14));
 		c.add(addS);
 		
-		
-		JList<String> sList = new JList<String>(sNameList);
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		JList<String> sList = new JList<String>(listModel);
 		sList.setBounds(650, 20, 800, 350);
 		sList.setFont(new Font(yourFont, Font.PLAIN, 18));
 		c.add(sList);
 
 		
-		JButton run = new JButton("ë‹¤ìŒ");
+		JButton run = new JButton("´ÙÀ½");
 		run.setBounds(160, 300, 80, 50);
 		run.setFont(new Font(yourFont, Font.PLAIN, 14));
 		c.add(run);
 		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1700,450);
 		setVisible(true);
 		
 		
 		addS.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				String tempText;
 				tempText = sName.getText();
 				tempText=tempText.trim();
 				if(tempText.compareTo("")==0) { //If schedule is null
-					JOptionPane.showMessageDialog(c, "ì´ë¦„ì´ ì—†ëŠ” ì¼ì •ì…ë‹ˆë‹¤!");
+					JOptionPane.showMessageDialog(c, "ÀÌ¸§ÀÌ ¾ø´Â ÀÏÁ¤ÀÔ´Ï´Ù!");
 				}
 				else {
 					boolean isChecked = false;
@@ -170,22 +167,22 @@ class nonLectureWindow extends JFrame{
 						}
 					}
 					if(!isChecked) { //If schedule has no day
-						JOptionPane.showMessageDialog(c, "ìš”ì¼ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
+						JOptionPane.showMessageDialog(c, "¿äÀÏÀ» È®ÀÎÇØ ÁÖ¼¼¿ä!");
 					}
 					else {
 						String inform="* "+tempText;
-						nonLecture n = new nonLecture(new Vector<timeBlock>(), tempText, (float)dM/6);
+						NonLecture n = new NonLecture(new Vector<TimeBlock>(), tempText, (float)dM/6);
 						inform+=" "+h[sH]+" "+m[sM]+"~"+h[eH]+" "+m[eM];
 						for(int i=0;i<7;i++) {
 							if(dayBox[i].isSelected()) {
 								if(eH+eM/6<sH+sM/6) {
-									timeBlock tB = new timeBlock(sH+sM/6, 24, i);
+									TimeBlock tB = new TimeBlock(sH+sM/6, 24, i);
 									n.pushTime(tB);
-									tB=new timeBlock(0, eH+eM/6, (i+1)%7);
+									tB=new TimeBlock(0, eH+eM/6, (i+1)%7);
 									n.pushTime(tB);
 								}
 								else {
-									timeBlock tB = new timeBlock(sH+(float)sM/6, eH+(float)eM/6, i);
+									TimeBlock tB = new TimeBlock(sH+(float)sM/6, eH+(float)eM/6, i);
 									n.pushTime(tB);
 								}
 								inform+=" "+day[i];
@@ -193,24 +190,23 @@ class nonLectureWindow extends JFrame{
 						}
 						boolean isBreak = false;
 						for(int i=0;i<nonLectures.size();i++) { //If schedule is intersected with others
-							if(nonLectures.elementAt(i).isIntersected(n.getTime())) {
-								JOptionPane.showMessageDialog(c, "ë‹¤ë¥¸ ìŠ¤ì¼€ì¤„ê³¼ ì‹œê°„ì´ ê²¹ì¹©ë‹ˆë‹¤!");
+							if(nonLectures.elementAt(i).isIntersected(n)) {
+								JOptionPane.showMessageDialog(c, "´Ù¸¥ ½ºÄÉÁÙ°ú ½Ã°£ÀÌ °ãÄ¨´Ï´Ù!");
 								isBreak = true;
 								break;
 							}
 						}
-						for(int i=0;i<lectures.size();i++) { //If schedule is intersected with lectures
-							if(n.isIntersected(lectures.elementAt(i))) {
-								JOptionPane.showMessageDialog(c, "ë‹¤ë¥¸ ê°•ì˜ì™€ ì‹œê°„ì´ ê²¹ì¹©ë‹ˆë‹¤!");
+						for(int i=0;i<selectedlectures.size();i++) { //If schedule is intersected with lectures
+							if(n.isIntersected(selectedlectures.elementAt(i))) {
+								JOptionPane.showMessageDialog(c, "´Ù¸¥ °­ÀÇ¿Í ½Ã°£ÀÌ °ãÄ¨´Ï´Ù!");
 								isBreak = true;
 								break;
 							}
 						}
 						if(!isBreak) {
-							sNameList.add(inform);
+							listModel.addElement(inform);
 							nonLectures.add(n);
-							callWindow(sNameList, lectures);
-							JOptionPane.showMessageDialog(c, "ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!");	
+							JOptionPane.showMessageDialog(c, "Ãß°¡µÇ¾ú½À´Ï´Ù!");	
 						}
 						
 					}
@@ -220,25 +216,20 @@ class nonLectureWindow extends JFrame{
 		
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				isReturn = true;
+				EtcSettingWindow etc = new EtcSettingWindow(lectures); 
 				dispose();
 			}
 		});
 
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 	}
 	
-	public Vector<nonLecture> getNonLecture(){
+	public Vector<NonLecture> getNonLecture(){
 		return nonLectures;
 	}
 	
 	public void refreshGUI() {
 		revalidate();
 		repaint();
-	}
-	public boolean isClosed() {
-		return isReturn;
 	}
 }

@@ -3,6 +3,8 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,17 +14,28 @@ import javax.swing.JOptionPane;
 
 
 @SuppressWarnings("serial")
-class etcSettingWindow extends JFrame{
-	private String yourFont = "ë°°ë‹¬ì˜ë¯¼ì¡± í•œë‚˜ì²´ Pro";
+class EtcSettingWindow extends JFrame {
+	private String yourFont = "¹è´ŞÀÇ¹ÎÁ· ÇÑ³ªÃ¼ Pro";
 	private Color yourColor = new Color(240, 232, 232);
-	private String[] h = {"0ì‹œ", "1ì‹œ", "2ì‹œ", "3ì‹œ", "4ì‹œ", "5ì‹œ", "6ì‹œ", "7ì‹œ", "8ì‹œ", "9ì‹œ", "10ì‹œ", "11ì‹œ", "12ì‹œ"
-			, "13ì‹œ","14ì‹œ", "15ì‹œ", "16ì‹œ", "17ì‹œ", "18ì‹œ", "19ì‹œ","20ì‹œ", "21ì‹œ","22ì‹œ", "23ì‹œ"};
-	private String[] m = {"0ë¶„", "10ë¶„", "20ë¶„", "30ë¶„", "40ë¶„", "50ë¶„"};
+	private String[] h = {"0½Ã", "1½Ã", "2½Ã", "3½Ã", "4½Ã", "5½Ã", "6½Ã", "7½Ã", "8½Ã", "9½Ã", "10½Ã", "11½Ã", "12½Ã"
+			, "13½Ã","14½Ã", "15½Ã", "16½Ã", "17½Ã", "18½Ã", "19½Ã","20½Ã", "21½Ã","22½Ã", "23½Ã"};
+	private String[] m = {"0ºĞ", "10ºĞ", "20ºĞ", "30ºĞ", "40ºĞ", "50ºĞ"};
 	private String[] credit = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"};
-	private String[] gradeList = {"1í•™ë…„", "2í•™ë…„", "3í•™ë…„", "4í•™ë…„"};
-	private int sH = 0, sM = 0, eH =0, eM = 0, mC = 8, MC = 8, Grade = 1;
+	private String[] gradeList = {"1ÇĞ³â", "2ÇĞ³â", "3ÇĞ³â", "4ÇĞ³â"};
+	private int sH = 0, sM = 0, eH =0, eM = 0, mC = 8, MC = 8, grade = 1;
+	private float startTime, endTime;
 	private boolean isReturn;
-	public void callWindow() {
+	private Vector<Vector<Lecture>> essential = new Vector<Vector<Lecture>>();
+	private Vector<Vector<Lecture>> onlyMajor=new Vector<Vector<Lecture>>();
+	private Vector<NonLecture> nonLectures = new Vector<NonLecture>();
+	private Vector<Integer> creditList = new Vector<Integer>();
+	private Vector<TimeTable> timeTables = new Vector<TimeTable>();
+	private Vector<Vector<Lecture>> lectures;
+
+	
+	public EtcSettingWindow(Vector<Vector<Lecture>> lectures) {
+		
+		this.lectures = lectures;
 		getContentPane().removeAll();
 		this.refreshGUI();
 		setTitle("Timetable Magician");
@@ -32,12 +45,12 @@ class etcSettingWindow extends JFrame{
 		c.setBackground(yourColor);
 		
 		
-		JLabel l1 = new JLabel("í¬ë§ ê°•ì˜ ì‹œì‘ ì‹œê°„");
+		JLabel l1 = new JLabel("Èñ¸Á °­ÀÇ ½ÃÀÛ ½Ã°£");
 		l1.setBounds(20, 10, 220, 20);
 		l1.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l1);
 		
-		JLabel l2 = new JLabel("í¬ë§ ê°•ì˜ ì¢…ë£Œ ì‹œê°„");
+		JLabel l2 = new JLabel("Èñ¸Á °­ÀÇ Á¾·á ½Ã°£");
 		l2.setBounds(240, 10, 220, 20);
 		l2.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l2);
@@ -93,17 +106,17 @@ class etcSettingWindow extends JFrame{
 		eMin.setBounds(330, 40, 70, 20);
 		c.add(eMin);
 		
-		JLabel l3 = new JLabel("ìµœì†Œ ìˆ˜ê°• í•™ì ");
+		JLabel l3 = new JLabel("ÃÖ¼Ò ¼ö°­ ÇĞÁ¡");
 		l3.setBounds(20, 80, 140, 20);
 		l3.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l3);
 		
-		JLabel l4 = new JLabel("ìµœëŒ€ ìˆ˜ê°• í•™ì ");
+		JLabel l4 = new JLabel("ÃÖ´ë ¼ö°­ ÇĞÁ¡");
 		l4.setBounds(160, 80, 140, 20);
 		l4.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l4);
 		
-		JLabel l5 = new JLabel("í˜„ì¬ í•™ë…„");
+		JLabel l5 = new JLabel("ÇöÀç ÇĞ³â");
 		l5.setBounds(320, 80, 130, 20);
 		l5.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l5);
@@ -130,18 +143,18 @@ class etcSettingWindow extends JFrame{
 		MCredit.setBounds(180, 110, 70, 20);
 		c.add(MCredit);
 		
-		JComboBox<String> grade = new JComboBox<String>(gradeList); //Set grade(level)
-		grade.addActionListener(new ActionListener() {
+		JComboBox<String> gradeComboBox = new JComboBox<String>(gradeList); //Set grade(level)
+		gradeComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)e.getSource();
-				Grade=cb.getSelectedIndex()+1;
+				grade=cb.getSelectedIndex()+1;
 			}
 		});
-		grade.setBounds(320, 110, 70, 20);
-		c.add(grade);
+		gradeComboBox.setBounds(320, 110, 70, 20);
+		c.add(gradeComboBox);
 		
-		JButton run = new JButton("ì‹¤í–‰í•˜ê¸°");
+		JButton run = new JButton("½ÇÇàÇÏ±â");
 		run.setBounds(100, 200, 200, 50);
 		run.setFont(new Font(yourFont, Font.PLAIN, 14));
 		c.add(run);
@@ -149,65 +162,146 @@ class etcSettingWindow extends JFrame{
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mC>MC) { //Error on credit setting
-					JOptionPane.showMessageDialog(c, "í•™ì ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
+					JOptionPane.showMessageDialog(c, "ÇĞÁ¡À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
 				}
 				else if(sH*6+sM>=eH*6+eM) { //Error on time setting
-					JOptionPane.showMessageDialog(c, "ì‹œê°„ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
+					JOptionPane.showMessageDialog(c, "½Ã°£À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
 				}
 				else {
-					isReturn = true;
-					dispose();	
+					run.setText("Á¦ÀÛÁß...");
+					arrangeLecture();
+					dispose();
+					timeTables.elementAt(0).callWindow(timeTables, 0);
 				}
 				
 			}
 		});
-		
+			
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(450,350);
 		setVisible(true);
 	}
+
 	
 	
 	public void refreshGUI() {
 		revalidate();
 		repaint();
 	}
-	public boolean isClosed() {
-		return isReturn;
+
+	private void arrangeLecture() {
+		
+		startTime = (float)sM/6+sH;
+		endTime = eH+(float)eM/6;
+		
+		SortLectures sorter = new SortLectures(grade); 
+		Collections.sort(lectures, sorter);
+		
+		for(int i=0;i<lectures.size();i++) { //Check how many essential lecture vector has
+			if(lectures.elementAt(i).elementAt(0).isMajor()&&(lectures.elementAt(i).elementAt(0).getLecture_type()==0||
+					lectures.elementAt(i).elementAt(0).getLecture_type()==1)) {//Essential means basic course or essential course
+				boolean isBreak=false;
+				for(int j=0;j<TimeTableMain.sL.getLectures().size();j++) {
+					if(TimeTableMain.sL.getLectures().elementAt(j).getCode().substring(0, 5).compareTo
+							(lectures.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+						isBreak=true;
+					}
+				}
+				if(!isBreak) {
+					essential.add(lectures.elementAt(i));
+				}
+			}
+			else {
+				break;
+			}
+		}
+		
+		int selectedCredit=0;
+		
+		for(int i=0;i<TimeTableMain.sL.getLectures().size();i++) {
+			selectedCredit+=TimeTableMain.sL.getLectures().elementAt(i).getCredit();
+		}
+		
+		pushMajor(TimeTableMain.sL.getLectures(), selectedCredit, 0); //Push essential lectures
+		
+		for(int i=0;i<onlyMajor.size();i++) {
+			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essential.size()); //Make timetable by backtracking
+		}
 	}
-
-
-	public int getsH() {
-		return sH;
+	private void pushMajor(Vector<Lecture> tempLectures, int credit, int pivot) { //Push essential major
+		if(onlyMajor.size()>5) {
+			return;
+		}
+		for(int i=pivot;i<essential.size();i++) {
+			for(int j=0;j<essential.elementAt(i).size();j++) {
+				boolean canPush = true;
+				for(int k=0;k<nonLectures.size();k++) {
+					if(nonLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j))) {
+						canPush=false;
+						break;
+					}
+				}
+				for(int k=0;k<tempLectures.size();k++) {
+					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())||
+							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(essential.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+						canPush=false;
+						break;
+					}
+				}
+				if(canPush) {
+					if(essential.elementAt(i).elementAt(j).isInStartToEnd(startTime, endTime)) {
+						@SuppressWarnings("unchecked")
+						Vector<Lecture> t = (Vector<Lecture>)tempLectures.clone();
+						t.add(essential.elementAt(i).elementAt(j));
+						pushMajor(t, credit+essential.elementAt(i).elementAt(j).getCredit(), i+1);
+					}
+				}
+			}
+		}
+		onlyMajor.add(tempLectures);
+		creditList.add(credit);
+		return;
 	}
-
-
-	public int getsM() {
-		return sM;
+	
+	private void pushTimetable(Vector<Lecture> tempLectures, int credit, int pivot) { //Push lectures
+		if(credit>=mC&&credit<=MC) {
+			timeTables.add(new TimeTable(credit, tempLectures, nonLectures));
+			timeTables.lastElement().computeEndtime();
+			timeTables.lastElement().computeStarttime();
+		}
+		if(credit>=MC) {
+			return;
+		}
+		for(int i=pivot;i<lectures.size();i++) {
+			for(int j=0;j<lectures.elementAt(i).size();j++) {
+				boolean canPush = true;
+				for(int k=0;k<nonLectures.size();k++) {
+					if(nonLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j))) {
+						canPush=false;
+						break;
+					}
+					
+				}
+				for(int k=0;k<tempLectures.size();k++) {
+					if(tempLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())||
+							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(lectures.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+						canPush=false;
+						break;
+					}
+				}
+				if(canPush) {
+					if(lectures.elementAt(i).elementAt(j).isInStartToEnd(startTime, endTime)) {
+						@SuppressWarnings("unchecked")
+						Vector<Lecture> t = (Vector<Lecture>)tempLectures.clone();
+						t.add(lectures.elementAt(i).elementAt(j));
+						pushTimetable(t, credit+lectures.elementAt(i).elementAt(j).getCredit(), i+1);
+					}
+				}
+			}
+		}
+		return;
 	}
+	
 
-
-	public int geteH() {
-		return eH;
-	}
-
-
-	public int geteM() {
-		return eM;
-	}
-
-
-	public int getmC() {
-		return mC;
-	}
-
-
-	public int getMC() {
-		return MC;
-	}
-
-
-	public int getGrade() {
-		return Grade;
-	}
 	
 }

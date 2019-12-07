@@ -10,22 +10,22 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-class timeTable extends JFrame{
+class TimeTable extends JFrame{
 	private int allStartTime, allEndTime;//When all schedule start and end
 	private int credit;//Credit
-	private Vector<lecture> lectures = new Vector<lecture>();//All lectures
-	private Vector<nonLecture> nonLectures = new Vector<nonLecture>();//All non lectures
+	private Vector<Lecture> lectures = new Vector<Lecture>();//All lectures
+	private Vector<NonLecture> nonLectures = new Vector<NonLecture>();//All non lectures
 	
 	private int prevOrNext = 0;
 	private boolean isReturn = false; //Is window is closed
 	private Color yourColor = new Color(240, 232, 232);
-	private String[] day = {"ì›”ìš”ì¼", "í™”ìš”ì¼", "ìˆ˜ìš”ì¼", "ëª©ìš”ì¼", "ê¸ˆìš”ì¼", "í† ìš”ì¼", "ì¼ìš”ì¼"};
-	 private String[] timeInfo = {"0ì‹œ", "1ì‹œ", "2ì‹œ", "3ì‹œ", "4ì‹œ", "5ì‹œ", "6ì‹œ", "7ì‹œ",
-			 "<html> 8ì‹œ<br />0êµì‹œ</html>", "<html> 9ì‹œ<br />1êµì‹œ</html>", "<html> 10ì‹œ<br />2êµì‹œ</html>", "<html> 11ì‹œ<br />3êµì‹œ</html>", 
-			 "<html> 12ì‹œ<br />4êµì‹œ</html>", "<html> 13ì‹œ<br />5êµì‹œ</html>", "<html> 14ì‹œ<br />6êµì‹œ</html>", "<html> 15ì‹œ<br />7êµì‹œ</html>", 
-			 "<html> 16ì‹œ<br />8êµì‹œ</html>", "<html> 17ì‹œ<br />9êµì‹œ</html>", "<html> 18ì‹œ<br />10êµì‹œ</html>", "<html> 19ì‹œ<br />11êµì‹œ</html>", 
-			 "20ì‹œ", "21ì‹œ", "22ì‹œ", "23ì‹œ"};
-	public void callWindow(){ //Open timetable
+	private String[] day = {"¿ù¿äÀÏ", "È­¿äÀÏ", "¼ö¿äÀÏ", "¸ñ¿äÀÏ", "±İ¿äÀÏ", "Åä¿äÀÏ", "ÀÏ¿äÀÏ"};
+	 private String[] timeInfo = {"0½Ã", "1½Ã", "2½Ã", "3½Ã", "4½Ã", "5½Ã", "6½Ã", "7½Ã",
+			 "<html> 8½Ã<br />0±³½Ã</html>", "<html> 9½Ã<br />1±³½Ã</html>", "<html> 10½Ã<br />2±³½Ã</html>", "<html> 11½Ã<br />3±³½Ã</html>", 
+			 "<html> 12½Ã<br />4±³½Ã</html>", "<html> 13½Ã<br />5±³½Ã</html>", "<html> 14½Ã<br />6±³½Ã</html>", "<html> 15½Ã<br />7±³½Ã</html>", 
+			 "<html> 16½Ã<br />8±³½Ã</html>", "<html> 17½Ã<br />9±³½Ã</html>", "<html> 18½Ã<br />10±³½Ã</html>", "<html> 19½Ã<br />11±³½Ã</html>", 
+			 "20½Ã", "21½Ã", "22½Ã", "23½Ã"};
+	public void callWindow(Vector<TimeTable> timeTables, int tableIndex){ //Open timetable
 		prevOrNext=0;
 		isReturn = false;
 		int rowNum = allEndTime - allStartTime + 1;
@@ -54,12 +54,12 @@ class timeTable extends JFrame{
 			c.add(timeBtn[i]);
 		}
 
-		JButton nextBtn = new JButton("ë‹¤ìŒ");
+		JButton nextBtn = new JButton("´ÙÀ½");
 		nextBtn.setBounds(1620, 20, 160, 120);
 		nextBtn.setBackground(new Color(255, 255, 255));
 		c.add(nextBtn);
 		
-		JButton prevBtn = new JButton("ì´ì „");
+		JButton prevBtn = new JButton("ÀÌÀü");
 		prevBtn.setBounds(1620, 800, 160, 120);
 		prevBtn.setBackground(new Color(255, 255, 255));
 		c.add(prevBtn);
@@ -69,7 +69,7 @@ class timeTable extends JFrame{
 			Color lc = new Color(192+(int)(Math.random()*63), 192+(int)(Math.random()*63), 192+(int)(Math.random()*63));
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
 				sBtn.add(new JButton(lectures.elementAt(i).getName()));
-				timeBlock tB = lectures.elementAt(i).getTime().elementAt(j);
+				TimeBlock tB = lectures.elementAt(i).getTime().elementAt(j);
 				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1), 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)),
 						195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
 				sBtn.lastElement().setBackground(lc);
@@ -80,13 +80,13 @@ class timeTable extends JFrame{
 		int index=0;
 		for(int i=0;i<lectures.size();i++) {
 			for(int j=0;j<lectures.elementAt(i).getTime().size();j++) {
-				lecture l = lectures.elementAt(i);
-				timeBlock t = l.getTime().elementAt(j);
+				Lecture l = lectures.elementAt(i);
+				TimeBlock t = l.getTime().elementAt(j);
 				sBtn.elementAt(index).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						JOptionPane.showMessageDialog(c, l.getName()+"\n"+
-					(l.isMajor()?"ì „ê³µ":"êµì–‘")+(l.isMajor()?(l.getLecture_type()==0?"í•„ìˆ˜":l.getLecture_type()==1?"ê¸°ì´ˆ":""):"")+
-					"(êµìˆ˜: "+l.getProfessor()+")\nê°•ì˜ì‹œê°„: "+t.getStartTime()+"~"+t.getEndTime());	
+					(l.isMajor()?"Àü°ø":"±³¾ç")+(l.isMajor()?(l.getLecture_type()==0?"ÇÊ¼ö":l.getLecture_type()==1?"±âÃÊ":""):"")+
+					"(±³¼ö: "+l.getProfessor()+")\n°­ÀÇ½Ã°£: "+t.getStartTime()+"~"+t.getEndTime());	
 					}
 				});
 				index++;
@@ -98,7 +98,7 @@ class timeTable extends JFrame{
 			Color lc = new Color(192+(int)(Math.random()*63), 192+(int)(Math.random()*63), 192+(int)(Math.random()*63));
 			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
 				sBtn.add(new JButton(nonLectures.elementAt(i).getName()));
-				timeBlock tB = nonLectures.elementAt(i).getTime().elementAt(j);
+				TimeBlock tB = nonLectures.elementAt(i).getTime().elementAt(j);
 				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1)
 						, 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)), 195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
 				sBtn.lastElement().setBackground(lc);
@@ -109,11 +109,11 @@ class timeTable extends JFrame{
 		
 		for(int i=0;i<nonLectures.size();i++) {
 			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
-				nonLecture l = nonLectures.elementAt(i);
-				timeBlock t = l.getTime().elementAt(j);
+				NonLecture l = nonLectures.elementAt(i);
+				TimeBlock t = l.getTime().elementAt(j);
 				sBtn.elementAt(index).addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JOptionPane.showMessageDialog(c, l.getName()+"\n"+day[t.getDay()]+t.getStartTime()+"~"+t.getEndTime()+"\nì´ë™ì‹œê°„: "+(int)(l.getFrontDelay()*60)+"ë¶„");	
+						JOptionPane.showMessageDialog(c, l.getName()+"\n"+day[t.getDay()]+t.getStartTime()+"~"+t.getEndTime()+"\nÀÌµ¿½Ã°£: "+(int)(l.getFrontDelay()*60)+"ºĞ");	
 					}
 				});
 				index++;
@@ -138,6 +138,7 @@ class timeTable extends JFrame{
 				isReturn = true;
 				prevOrNext=-1;
 				dispose();
+				timeTables.elementAt(tableIndex-1>=0?tableIndex-1:0).callWindow(timeTables, tableIndex-1>=0?tableIndex+1:0);
 			}
 		});
 		nextBtn.addActionListener(new ActionListener() {
@@ -145,13 +146,15 @@ class timeTable extends JFrame{
 				isReturn = true;
 				prevOrNext=1;
 				dispose();
+				timeTables.elementAt(tableIndex+1<=timeTables.size()-1?tableIndex+1:timeTables.size()-1).callWindow(timeTables
+						, tableIndex+1<=timeTables.size()-1?tableIndex+1:timeTables.size()-1);
 			}
 		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	} 
 	
-	public timeTable(int credit, Vector<lecture> lectures, Vector<nonLecture> nonLectures) {
+	public TimeTable(int credit, Vector<Lecture> lectures, Vector<NonLecture> nonLectures) {
 		super();
 		this.credit = credit;
 		this.lectures = lectures;
@@ -187,22 +190,22 @@ class timeTable extends JFrame{
 		this.credit = credit;
 	}
 
-	public Vector<lecture> getLectures() {
+	public Vector<Lecture> getLectures() {
 		return lectures;
 	}
 
 
-	public void setLectures(Vector<lecture> lectures) {
+	public void setLectures(Vector<Lecture> lectures) {
 		this.lectures = lectures;
 	}
 
 
-	public Vector<nonLecture> getNonLectures() {
+	public Vector<NonLecture> getNonLectures() {
 		return nonLectures;
 	}
 
 
-	public void setNonLectures(Vector<nonLecture> nonLectures) {
+	public void setNonLectures(Vector<NonLecture> nonLectures) {
 		this.nonLectures = nonLectures;
 	}
 
@@ -215,6 +218,7 @@ class timeTable extends JFrame{
 	public boolean isClosed() {
 		return isReturn;
 	}
+	
 	public void computeStarttime() { //Compute real start time
 		float min=24;
 		for(int i=0;i<lectures.size();i++) {
@@ -225,7 +229,7 @@ class timeTable extends JFrame{
 		}
 		for(int i=0;i<nonLectures.size();i++) {
 			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
-				nonLecture nl = nonLectures.elementAt(i);
+				NonLecture nl = nonLectures.elementAt(i);
 				min=nl.getTime().elementAt(j).getStartTime()<min?
 						nl.getTime().elementAt(j).getStartTime():min;
 			}
@@ -235,6 +239,7 @@ class timeTable extends JFrame{
 			allStartTime=0;
 		}
 	}
+	
 	public void computeEndtime() { //Compute real end time
 		float max=0;
 		for(int i=0;i<lectures.size();i++) {
@@ -245,7 +250,7 @@ class timeTable extends JFrame{
 		}
 		for(int i=0;i<nonLectures.size();i++) {
 			for(int j=0;j<nonLectures.elementAt(i).getTime().size();j++) {
-				nonLecture nl = nonLectures.elementAt(i);
+				NonLecture nl = nonLectures.elementAt(i);
 				max=nl.getTime().elementAt(j).getEndTime()>max?
 						nl.getTime().elementAt(j).getEndTime():max;
 			}
@@ -255,6 +260,7 @@ class timeTable extends JFrame{
 			allEndTime=24;
 		}
 	}
+	
 	public int selectWay() {
 		return prevOrNext;
 	}

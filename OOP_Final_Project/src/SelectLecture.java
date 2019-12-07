@@ -15,14 +15,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class selectLecture extends JFrame{
-	private String[] day = {"ì›”ìš”ì¼", "í™”ìš”ì¼", "ìˆ˜ìš”ì¼", "ëª©ìš”ì¼", "ê¸ˆìš”ì¼", "í† ìš”ì¼", "ì¼ìš”ì¼"};
-	private String[] gradeList = {"ê³µí†µ", "1í•™ë…„", "2í•™ë…„", "3í•™ë…„", "4í•™ë…„"};
-	private String yourFont = "ë°°ë‹¬ì˜ë¯¼ì¡± í•œë‚˜ì²´ Pro";
+public class SelectLecture extends JFrame {
+	
+	private String[] day = {"¿ù¿äÀÏ", "È­¿äÀÏ", "¼ö¿äÀÏ", "¸ñ¿äÀÏ", "±İ¿äÀÏ", "Åä¿äÀÏ", "ÀÏ¿äÀÏ"};
+	private String[] gradeList = {"°øÅë", "1ÇĞ³â", "2ÇĞ³â", "3ÇĞ³â", "4ÇĞ³â"};
+	private String yourFont = "¹è´ŞÀÇ¹ÎÁ· ÇÑ³ªÃ¼ Pro";
 	private Color yourColor = new Color(240, 232, 232), selected = new Color(255, 248, 204), nonSelected = new Color(255, 255, 255);
 	private boolean isReturn = false;
-	private Vector<lecture> selectedLecture = new Vector<lecture>();
-	public void callWindow(Vector<Vector<lecture>> lectures) {
+	private Vector<Lecture> selectedLecture = new Vector<Lecture>();
+	private Vector<Vector<Lecture>> lectures;
+	
+	public SelectLecture(String filePath) {
+		
+		ParsingLecture tool = new ParsingLecture(filePath);
+		lectures = tool.getLectures();
+		
 		getContentPane().removeAll();
 		this.refreshGUI();
 		setTitle("Timetable Magician");
@@ -38,10 +45,12 @@ public class selectLecture extends JFrame{
 		}
 		
 		JPanel[] lectureList = new JPanel[5];
+		
 		for(int i=0;i<5;i++) {
 			lectureList[i]=new JPanel();
 			lectureList[i].setLayout(new GridLayout(gradeNum[i], 1));
 		}
+		
 		JLabel[] gradeLabel = new JLabel[5];
 		for(int i=0;i<5;i++) {
 			gradeLabel[i] = new JLabel(gradeList[i]);
@@ -50,12 +59,13 @@ public class selectLecture extends JFrame{
 			gradeLabel[i].setHorizontalAlignment(JLabel.CENTER);
 			c.add(gradeLabel[i]);
 		}
+		
 		for(int i=0;i<lectures.size();i++) {
 			for(int j=0;j<lectures.elementAt(i).size();j++) {
-				lecture l = lectures.elementAt(i).elementAt(j);
+				Lecture l = lectures.elementAt(i).elementAt(j);
 				String info = "<html>"+l.getName()+"<br />"+
-						(l.isMajor()?"ì „ê³µ":"êµì–‘")+(l.isMajor()?(l.getLecture_type()==0?"í•„ìˆ˜":l.getLecture_type()==1?"ê¸°ì´ˆ":""):"")+
-						"(êµìˆ˜: "+l.getProfessor()+")<br />------ê°•ì˜ì‹œê°„------<br />";
+						(l.isMajor()?"Àü°ø":"±³¾ç")+(l.isMajor()?(l.getLecture_type()==0?"ÇÊ¼ö":l.getLecture_type()==1?"±âÃÊ":""):"")+
+						"(±³¼ö: "+l.getProfessor()+")<br />------°­ÀÇ½Ã°£------<br />";
 				for(int k=0;k<l.getTime().size();k++) {
 					info+=day[l.getTime().elementAt(k).getDay()]+" "+l.getTime().elementAt(k).getStartTime()+"~"+l.getTime().elementAt(k).getEndTime()+"<br />";
 				}
@@ -76,7 +86,7 @@ public class selectLecture extends JFrame{
 								}
 							}
 							if(isBreak) {
-								JOptionPane.showMessageDialog(c, "ì‹œê°„ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
+								JOptionPane.showMessageDialog(c, "½Ã°£À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
 							}
 							else {
 								btn.setBackground(selected);
@@ -96,12 +106,12 @@ public class selectLecture extends JFrame{
 			}
 		}
 		
-		JButton run = new JButton("ë‹¤ìŒ");
+		JButton run = new JButton("´ÙÀ½");
 		run.setBounds(1000, 80, 120, 50);
 		c.add(run);
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				isReturn = true;
+				NonLectureWindow nonLectureWindow = new NonLectureWindow(selectedLecture, lectures);
 				dispose();
 			}
 		});
@@ -115,12 +125,12 @@ public class selectLecture extends JFrame{
 		}
 		
 		
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1200,1000);
 		setVisible(true);
 	}
-
-	public Vector<lecture> getLectures(){
+	
+	public Vector<Lecture> getLectures(){
 		return selectedLecture;
 	}
 	
@@ -128,8 +138,4 @@ public class selectLecture extends JFrame{
 		revalidate();
 		repaint();
 	}
-	public boolean isClosed() {
-		return isReturn;
-	}
-
 }

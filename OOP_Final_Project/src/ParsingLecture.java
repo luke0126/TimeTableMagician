@@ -7,9 +7,11 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class parsingLecture {
-	public Vector<Vector<lecture>> getLecture(String route) { //Get lectures information from xls
-		Vector<Vector<lecture>> lectures = new Vector<Vector<lecture>>();
+public class ParsingLecture {
+	
+	private Vector<Vector<Lecture>> lectures = new Vector<Vector<Lecture>>();
+	
+	public ParsingLecture(String route) {
 		try {
 			FileInputStream xls = new FileInputStream(route);
 			HSSFWorkbook workbook = new HSSFWorkbook(xls);
@@ -27,7 +29,7 @@ public class parsingLecture {
 					String lectureName="";
 					String professor="";
 					String code="";
-					Vector<timeBlock> time=new Vector<timeBlock>();
+					Vector<TimeBlock> time=new Vector<TimeBlock>();
 					int level=0;
 					int credit=0;
 					boolean isMajor=false;
@@ -61,32 +63,32 @@ public class parsingLecture {
 								break;
 							case 9:
 								for(int i=0;i<value.length();i++) {
-									if(value.charAt(i)=='ì›”') {
-										timeBlock temp = new timeBlock(0, 0, 0);
+									if(value.charAt(i)=='¿ù') {
+										TimeBlock temp = new TimeBlock(0, 0, 0);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='í™”') {
-										timeBlock temp = new timeBlock(0, 0, 1);
+									else if(value.charAt(i)=='È­') {
+										TimeBlock temp = new TimeBlock(0, 0, 1);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='ìˆ˜') {
-										timeBlock temp = new timeBlock(0, 0, 2);
+									else if(value.charAt(i)=='¼ö') {
+										TimeBlock temp = new TimeBlock(0, 0, 2);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='ëª©') {
-										timeBlock temp = new timeBlock(0, 0, 3);
+									else if(value.charAt(i)=='¸ñ') {
+										TimeBlock temp = new TimeBlock(0, 0, 3);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='ê¸ˆ') {
-										timeBlock temp = new timeBlock(0, 0, 4);
+									else if(value.charAt(i)=='±Ý') {
+										TimeBlock temp = new TimeBlock(0, 0, 4);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='í† ') {
-										timeBlock temp = new timeBlock(0, 0, 5);
+									else if(value.charAt(i)=='Åä') {
+										TimeBlock temp = new TimeBlock(0, 0, 5);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='ì¼') {
-										timeBlock temp = new timeBlock(0, 0, 6);
+									else if(value.charAt(i)=='ÀÏ') {
+										TimeBlock temp = new TimeBlock(0, 0, 6);
 										time.add(temp);
 									}
 									else if(value.charAt(i)>='0'&&value.charAt(i)<='9') {
@@ -114,12 +116,12 @@ public class parsingLecture {
 							}
 						}
 					}
-					if(lectureType.substring(0, 2).compareTo("ì „ê³µ")==0) {
+					if(lectureType.substring(0, 2).compareTo("Àü°ø")==0) {
 						isMajor = true;
 						if(lectureType.length()==2) {
 							lectureTypeInt=2;
 						}
-						else if(lectureType.substring(2, 4).compareTo("ê¸°ì´ˆ")==0) {
+						else if(lectureType.substring(2, 4).compareTo("±âÃÊ")==0) {
 							lectureTypeInt = 1;
 						}
 					}
@@ -129,11 +131,11 @@ public class parsingLecture {
 						}
 					}
 					if(rowIndex!=1&&lectures.lastElement().lastElement().getCode().substring(0, 5).compareTo(code.substring(0, 5))==0) {
-						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));
+						lectures.lastElement().add(new Lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));
 					}
 					else {
-						lectures.add(new Vector<lecture>());
-						lectures.lastElement().add(new lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));	
+						lectures.add(new Vector<Lecture>());
+						lectures.lastElement().add(new Lecture(time, lectureName, professor, credit, isMajor, lectureTypeInt, level, code));	
 					}
 					
 				}
@@ -142,6 +144,11 @@ public class parsingLecture {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	Vector<Vector<Lecture>> getLectures() {
 		return lectures;
 	}
+	
 }

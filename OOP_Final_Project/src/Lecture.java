@@ -1,14 +1,14 @@
 import java.util.Vector;
 
-class lecture extends scheduleBlock{
+class Lecture extends ScheduleBlock{
 	private String professor;//Professor's name
 	private int credit;//3, 2 or 1
 	private boolean isMajor;//true = major, false = nonMajor
-	private int lecture_type;//true->0 : ì „ê³µí•„ìˆ˜, true->1 : ì „ê³µê¸°ì´ˆ, true->2 : ì „ê³µ
-	//false->0 : í•„ìˆ˜êµì–‘, false->1, 2, 3, 4, 5 : í•µì‹¬êµì–‘ ì‹œë¦¬ì¦ˆ
-	private int level; //0->ê³µí†µ, 1, 2, 3, 4->1í•™ë…„ 2í•™ë…„ 3í•™ë…„ 4í•™ë…„
+	private int lecture_type;//true->0 : Àü°øÇÊ¼ö, true->1 : Àü°ø±âÃÊ, true->2 : Àü°ø
+	//false->0 : ÇÊ¼ö±³¾ç, false->1, 2, 3, 4, 5 : ÇÙ½É±³¾ç ½Ã¸®Áî
+	private int level; //0->°øÅë, 1, 2, 3, 4->1ÇĞ³â 2ÇĞ³â 3ÇĞ³â 4ÇĞ³â
 	private String code;
-	public lecture(Vector<timeBlock> time, String name, String professor, int credit, boolean isMajor, int lecture_type,
+	public Lecture(Vector<TimeBlock> time, String name, String professor, int credit, boolean isMajor, int lecture_type,
 			int level, String code) {
 		super(time, name);
 		this.professor = professor;
@@ -20,30 +20,30 @@ class lecture extends scheduleBlock{
 	}
 
 	public void showInformation() { //Just for debugging
-		System.out.println("ê°•ì˜ ëª…: "+super.getName()+", êµìˆ˜ë‹˜: "+this.professor+", í•™ì : "+this.credit+", ì „ê³µ: "+this.isMajor+", ê°•ì˜ìœ í˜•: "+this.lecture_type+", í•™ë…„: "+this.level);
-		System.out.println("--ê°•ì˜ì‹œê°„--");
+		System.out.println("°­ÀÇ ¸í: "+super.getName()+", ±³¼ö´Ô: "+this.professor+", ÇĞÁ¡: "+this.credit+", Àü°ø: "+this.isMajor+", °­ÀÇÀ¯Çü: "+this.lecture_type+", ÇĞ³â: "+this.level);
+		System.out.println("--°­ÀÇ½Ã°£--");
 		for(int i=0;i<super.getTime().size();i++) {
 			switch (super.getTime().elementAt(i).getDay()) {
 			case 0:
-				System.out.print("ì›”ìš”ì¼ ");
+				System.out.print("¿ù¿äÀÏ ");
 				break;
 			case 1:
-				System.out.print("í™”ìš”ì¼ ");
+				System.out.print("È­¿äÀÏ ");
 				break;
 			case 2:
-				System.out.print("ìˆ˜ìš”ì¼ ");
+				System.out.print("¼ö¿äÀÏ ");
 				break;
 			case 3:
-				System.out.print("ëª©ìš”ì¼ ");
+				System.out.print("¸ñ¿äÀÏ ");
 				break;
 			case 4:
-				System.out.print("ê¸ˆìš”ì¼ ");
+				System.out.print("±İ¿äÀÏ ");
 				break;
 			case 5:
-				System.out.print("í† ìš”ì¼ ");
+				System.out.print("Åä¿äÀÏ ");
 				break;
 			case 6:
-				System.out.print("ì¼ìš”ì¼ ");
+				System.out.print("ÀÏ¿äÀÏ ");
 				break;
 			default:
 				break;

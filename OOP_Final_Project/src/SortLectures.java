@@ -1,74 +1,74 @@
 import java.util.Comparator;
 import java.util.Vector;
 
-public class sortLectures implements Comparator<Vector<lecture>> {
+public class SortLectures implements Comparator<Vector<Lecture>> {
 
 	int grade;
 	
-	public sortLectures(int grade) {
+	public SortLectures(int grade) {
 		super();
 		this.grade = grade;
 	}
 	@Override
-	public int compare(Vector<lecture> a, Vector<lecture> b) {
-		lecture l1 = a.elementAt(0);
-		lecture l2 = b.elementAt(0);
-		if(l1.getLevel()!=l2.getLevel()) { //ë‘ ê°•ì˜ê°€ í•™ë…„ì´ ë‹¤ë¥´ë‹¤ë©´
-			if(l1.getLevel()==grade) { //l1ì´ ì‚¬ìš©ìì˜ í•™ë…„ì´ë¼ë©´
+	public int compare(Vector<Lecture> a, Vector<Lecture> b) {
+		Lecture l1 = a.elementAt(0);
+		Lecture l2 = b.elementAt(0);
+		if(l1.getLevel()!=l2.getLevel()) { //µÎ °­ÀÇ°¡ ÇĞ³âÀÌ ´Ù¸£´Ù¸é
+			if(l1.getLevel()==grade) { //l1ÀÌ »ç¿ëÀÚÀÇ ÇĞ³âÀÌ¶ó¸é
 				return -1;
 			}
-			else if(l2.getLevel()==grade) { //l2ê°€ ì‚¬ìš©ìì˜ í•™ë…„ì´ë¼ë©´
+			else if(l2.getLevel()==grade) { //l2°¡ »ç¿ëÀÚÀÇ ÇĞ³âÀÌ¶ó¸é
 				return 1;
 			}
-			else { //ë‘ ê°•ì˜ ëª¨ë‘ ì‚¬ìš©ìì˜ í•™ë…„ê³¼ ë‹¤ë¥´ë‹¤ë©´
-				if(l1.isMajor()!=l2.isMajor()) { //í•˜ë‚˜ëŠ” êµì–‘, í•˜ë‚˜ëŠ” ì „ê³µì´ë¼ë©´
-					if(l1.isMajor()) { //l1ì´ ì „ê³µì´ë¼ë©´
+			else { //µÎ °­ÀÇ ¸ğµÎ »ç¿ëÀÚÀÇ ÇĞ³â°ú ´Ù¸£´Ù¸é
+				if(l1.isMajor()!=l2.isMajor()) { //ÇÏ³ª´Â ±³¾ç, ÇÏ³ª´Â Àü°øÀÌ¶ó¸é
+					if(l1.isMajor()) { //l1ÀÌ Àü°øÀÌ¶ó¸é
 						return -1;
 					}
-					else { //l2ê°€ ì „ê³µì´ë¼ë©´
+					else { //l2°¡ Àü°øÀÌ¶ó¸é
 						return 1;
 					}
 				}
-				else { //ë‘ ê°•ì˜ ëª¨ë‘ ê°™ì€ íƒ€ì…ì´ë¼ë©´
-					if(l1.isMajor()) { //ë‘ ê°•ì˜ ëª¨ë‘ ì „ê³µì´ë¼ë©´
-						if(l1.getLecture_type()<l2.getLecture_type()) { //l1ì˜ ìš°ì„ ìˆœìœ„ê°€ l2ë³´ë‹¤ ë†’ë‹¤ë©´
+				else { //µÎ °­ÀÇ ¸ğµÎ °°Àº Å¸ÀÔÀÌ¶ó¸é
+					if(l1.isMajor()) { //µÎ °­ÀÇ ¸ğµÎ Àü°øÀÌ¶ó¸é
+						if(l1.getLecture_type()<l2.getLecture_type()) { //l1ÀÇ ¿ì¼±¼øÀ§°¡ l2º¸´Ù ³ô´Ù¸é
 							return -1;
 						}
-						else if(l1.getLecture_type()>l2.getLecture_type()) { //l2ì˜ ìš°ì„ ìˆœìœ„ê°€ l1ë³´ë‹¤ ë†’ë‹¤ë©´
+						else if(l1.getLecture_type()>l2.getLecture_type()) { //l2ÀÇ ¿ì¼±¼øÀ§°¡ l1º¸´Ù ³ô´Ù¸é
 							return 1;
 						}
-						else { //ë‘ ê°•ì˜ì˜ ìš°ì„ ìˆœìœ„ê°€ ê°™ë‹¤ë©´
+						else { //µÎ °­ÀÇÀÇ ¿ì¼±¼øÀ§°¡ °°´Ù¸é
 							return 0;
 						}
 					}
-					else { //ë‘˜ ë‹¤ êµì–‘ì´ë¼ë©´
+					else { //µÑ ´Ù ±³¾çÀÌ¶ó¸é
 						return 0;
 					}
 				}
 			}
 		}
 		else {
-			if(l1.isMajor()!=l2.isMajor()) { //í•˜ë‚˜ëŠ” êµì–‘, í•˜ë‚˜ëŠ” ì „ê³µì´ë¼ë©´
-				if(l1.isMajor()) { //l1ì´ ì „ê³µì´ë¼ë©´
+			if(l1.isMajor()!=l2.isMajor()) { //ÇÏ³ª´Â ±³¾ç, ÇÏ³ª´Â Àü°øÀÌ¶ó¸é
+				if(l1.isMajor()) { //l1ÀÌ Àü°øÀÌ¶ó¸é
 					return -1;
 				}
-				else { //l2ê°€ ì „ê³µì´ë¼ë©´
+				else { //l2°¡ Àü°øÀÌ¶ó¸é
 					return 1;
 				}
 			}
-			else { //ë‘ ê°•ì˜ ëª¨ë‘ ê°™ì€ íƒ€ì…ì´ë¼ë©´
-				if(l1.isMajor()) { //ë‘ ê°•ì˜ ëª¨ë‘ ì „ê³µì´ë¼ë©´
-					if(l1.getLecture_type()<l2.getLecture_type()) { //l1ì˜ ìš°ì„ ìˆœìœ„ê°€ l2ë³´ë‹¤ ë†’ë‹¤ë©´
+			else { //µÎ °­ÀÇ ¸ğµÎ °°Àº Å¸ÀÔÀÌ¶ó¸é
+				if(l1.isMajor()) { //µÎ °­ÀÇ ¸ğµÎ Àü°øÀÌ¶ó¸é
+					if(l1.getLecture_type()<l2.getLecture_type()) { //l1ÀÇ ¿ì¼±¼øÀ§°¡ l2º¸´Ù ³ô´Ù¸é
 						return -1;
 					}
-					else if(l1.getLecture_type()>l2.getLecture_type()) { //l2ì˜ ìš°ì„ ìˆœìœ„ê°€ l1ë³´ë‹¤ ë†’ë‹¤ë©´
+					else if(l1.getLecture_type()>l2.getLecture_type()) { //l2ÀÇ ¿ì¼±¼øÀ§°¡ l1º¸´Ù ³ô´Ù¸é
 						return 1;
 					}
-					else { //ë‘ ê°•ì˜ì˜ ìš°ì„ ìˆœìœ„ê°€ ê°™ë‹¤ë©´
+					else { //µÎ °­ÀÇÀÇ ¿ì¼±¼øÀ§°¡ °°´Ù¸é
 						return 0;
 					}
 				}
-				else { //ë‘˜ ë‹¤ êµì–‘ì´ë¼ë©´
+				else { //µÑ ´Ù ±³¾çÀÌ¶ó¸é
 					return 0;
 				}
 			}

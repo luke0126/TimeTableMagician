@@ -1,21 +1,21 @@
 import java.util.Vector;
 
-class scheduleBlock {
-	private Vector<timeBlock> time = new Vector<timeBlock>();//When schedule is going on
+class ScheduleBlock {
+	private Vector<TimeBlock> time = new Vector<TimeBlock>();//When schedule is going on
 	private String name;//Schedule's name
-	public scheduleBlock(Vector<timeBlock> time, String name) {
+	public ScheduleBlock(Vector<TimeBlock> time, String name) {
 		super();
 		this.time = time;
 		this.name = name;
 	}
-	public scheduleBlock() {
-		this.time = new Vector<timeBlock>();
+	public ScheduleBlock() {
+		this.time = new Vector<TimeBlock>();
 		this.name = "";
 	}
-	public Vector<timeBlock> getTime() {
+	public Vector<TimeBlock> getTime() {
 		return time;
 	}
-	public void setTime(Vector<timeBlock> time) {
+	public void setTime(Vector<TimeBlock> time) {
 		this.time = time;
 	}
 	public String getName() {
@@ -24,7 +24,7 @@ class scheduleBlock {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isIntersected(Vector<timeBlock> other) { //Is intersected with other schedule's timeblock
+	public boolean isIntersected(Vector<TimeBlock> other) { //Is intersected with other schedule's timeblock
 		for(int i=0;i<other.size();i++) {
 			for(int j=0;j<this.time.size();j++) {
 				if(other.elementAt(i).getDay()==this.time.elementAt(j).getDay()&&

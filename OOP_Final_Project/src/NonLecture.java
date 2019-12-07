@@ -1,9 +1,9 @@
 import java.util.Vector;
 
-class nonLecture extends scheduleBlock{
+class NonLecture extends ScheduleBlock{
 	private float frontDelay;
 
-	public nonLecture(Vector<timeBlock> time, String name, float frontDelay) {
+	public NonLecture(Vector<TimeBlock> time, String name, float frontDelay) {
 		super(time, name);
 		this.frontDelay = frontDelay;
 	}
@@ -16,24 +16,46 @@ class nonLecture extends scheduleBlock{
 		this.frontDelay = frontDelay;
 	}
 	
-	public void pushTime(timeBlock tB) {
-		Vector<timeBlock> temp = super.getTime();
+	public void pushTime(TimeBlock tB) {
+		Vector<TimeBlock> temp = super.getTime();
 		temp.add(tB);
 		super.setTime(temp);
 	}
 	
-	public boolean isIntersected(lecture l) { //Is intersected between lecture and nonLecture
-		Vector<timeBlock> temp = new Vector<timeBlock>(super.getTime().size());
+	public boolean isIntersected(Lecture l) { //Is intersected between lecture and nonLecture
+		Vector<TimeBlock> temp = new Vector<TimeBlock>(super.getTime().size());
 		
 		for(int i=0;i<super.getTime().size();i++) {
-			temp.add(new timeBlock(super.getTime().elementAt(i).getStartTime()-frontDelay,
+			temp.add(new TimeBlock(super.getTime().elementAt(i).getStartTime()-frontDelay,
 					super.getTime().elementAt(i).getEndTime(), super.getTime().elementAt(i).getDay()));
 		}
-		for(int i=0;i<temp.size();i++) {
-			if(l.isIntersected(temp)) {
-				return true;
-			}
+		if(l.isIntersected(temp)) {
+			return true;
+		} else {
+			return false;	
 		}
-		return false;
+		
+	}
+	
+	public boolean isIntersected(NonLecture nl) { //Is intersected between lecture and nonLecture
+		Vector<TimeBlock> temp1 = new Vector<TimeBlock>(super.getTime().size());
+		
+		for(int i=0;i<super.getTime().size();i++) {
+			temp1.add(new TimeBlock(super.getTime().elementAt(i).getStartTime()-frontDelay,
+					super.getTime().elementAt(i).getEndTime(), super.getTime().elementAt(i).getDay()));
+		}
+		Vector<TimeBlock> temp2 = new Vector<TimeBlock>(nl.getTime().size());
+		
+		for(int i=0;i<nl.getTime().size();i++) {
+			temp2.add(new TimeBlock(nl.getTime().elementAt(i).getStartTime()-nl.getFrontDelay(),
+					nl.getTime().elementAt(i).getEndTime(), nl.getTime().elementAt(i).getDay()));
+		}
+		ScheduleBlock sb = new ScheduleBlock(temp2, "");
+		if(sb.isIntersected(temp1)) {
+			return true;
+		} else {
+			return false;	
+		}
+		
 	}
 }
