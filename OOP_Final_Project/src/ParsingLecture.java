@@ -61,31 +61,31 @@ public class parsingLecture {
 								break;
 							case 9:
 								for(int i=0;i<value.length();i++) {
-									if(value.charAt(i)=='¿ù') {
+									if(value.charAt(i)=='ì›”') {
 										timeBlock temp = new timeBlock(0, 0, 0);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='È­') {
+									else if(value.charAt(i)=='í™”') {
 										timeBlock temp = new timeBlock(0, 0, 1);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='¼ö') {
+									else if(value.charAt(i)=='ìˆ˜') {
 										timeBlock temp = new timeBlock(0, 0, 2);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='¸ñ') {
+									else if(value.charAt(i)=='ëª©') {
 										timeBlock temp = new timeBlock(0, 0, 3);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='±Ý') {
+									else if(value.charAt(i)=='ê¸ˆ') {
 										timeBlock temp = new timeBlock(0, 0, 4);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='Åä') {
+									else if(value.charAt(i)=='í† ') {
 										timeBlock temp = new timeBlock(0, 0, 5);
 										time.add(temp);
 									}
-									else if(value.charAt(i)=='ÀÏ') {
+									else if(value.charAt(i)=='ì¼') {
 										timeBlock temp = new timeBlock(0, 0, 6);
 										time.add(temp);
 									}
@@ -114,12 +114,12 @@ public class parsingLecture {
 							}
 						}
 					}
-					if(lectureType.substring(0, 2).compareTo("Àü°ø")==0) {
+					if(lectureType.substring(0, 2).compareTo("ì „ê³µ")==0) {
 						isMajor = true;
 						if(lectureType.length()==2) {
 							lectureTypeInt=2;
 						}
-						else if(lectureType.substring(2, 4).compareTo("±âÃÊ")==0) {
+						else if(lectureType.substring(2, 4).compareTo("ê¸°ì´ˆ")==0) {
 							lectureTypeInt = 1;
 						}
 					}
