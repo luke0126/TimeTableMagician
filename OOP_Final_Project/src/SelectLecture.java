@@ -16,9 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class selectLecture extends JFrame{
-	private String[] day = {"¿ù¿äÀÏ", "È­¿äÀÏ", "¼ö¿äÀÏ", "¸ñ¿äÀÏ", "±İ¿äÀÏ", "Åä¿äÀÏ", "ÀÏ¿äÀÏ"};
-	private String[] gradeList = {"°øÅë", "1ÇĞ³â", "2ÇĞ³â", "3ÇĞ³â", "4ÇĞ³â"};
-	private String yourFont = "¹è´ŞÀÇ¹ÎÁ· ÇÑ³ªÃ¼ Pro";
+	private String[] day = {"ì›”ìš”ì¼", "í™”ìš”ì¼", "ìˆ˜ìš”ì¼", "ëª©ìš”ì¼", "ê¸ˆìš”ì¼", "í† ìš”ì¼", "ì¼ìš”ì¼"};
+	private String[] gradeList = {"ê³µí†µ", "1í•™ë…„", "2í•™ë…„", "3í•™ë…„", "4í•™ë…„"};
+	private String yourFont = "ë°°ë‹¬ì˜ë¯¼ì¡± í•œë‚˜ì²´ Pro";
 	private Color yourColor = new Color(240, 232, 232), selected = new Color(255, 248, 204), nonSelected = new Color(255, 255, 255);
 	private boolean isReturn = false;
 	private Vector<lecture> selectedLecture = new Vector<lecture>();
@@ -54,8 +54,8 @@ public class selectLecture extends JFrame{
 			for(int j=0;j<lectures.elementAt(i).size();j++) {
 				lecture l = lectures.elementAt(i).elementAt(j);
 				String info = "<html>"+l.getName()+"<br />"+
-						(l.isMajor()?"Àü°ø":"±³¾ç")+(l.isMajor()?(l.getLecture_type()==0?"ÇÊ¼ö":l.getLecture_type()==1?"±âÃÊ":""):"")+
-						"(±³¼ö: "+l.getProfessor()+")<br />------°­ÀÇ½Ã°£------<br />";
+						(l.isMajor()?"ì „ê³µ":"êµì–‘")+(l.isMajor()?(l.getLecture_type()==0?"í•„ìˆ˜":l.getLecture_type()==1?"ê¸°ì´ˆ":""):"")+
+						"(êµìˆ˜: "+l.getProfessor()+")<br />------ê°•ì˜ì‹œê°„------<br />";
 				for(int k=0;k<l.getTime().size();k++) {
 					info+=day[l.getTime().elementAt(k).getDay()]+" "+l.getTime().elementAt(k).getStartTime()+"~"+l.getTime().elementAt(k).getEndTime()+"<br />";
 				}
@@ -76,7 +76,7 @@ public class selectLecture extends JFrame{
 								}
 							}
 							if(isBreak) {
-								JOptionPane.showMessageDialog(c, "½Ã°£À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
+								JOptionPane.showMessageDialog(c, "ì‹œê°„ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
 							}
 							else {
 								btn.setBackground(selected);
@@ -96,7 +96,7 @@ public class selectLecture extends JFrame{
 			}
 		}
 		
-		JButton run = new JButton("´ÙÀ½");
+		JButton run = new JButton("ë‹¤ìŒ");
 		run.setBounds(1000, 80, 120, 50);
 		c.add(run);
 		run.addActionListener(new ActionListener() {
