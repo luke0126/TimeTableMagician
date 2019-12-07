@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 class etcSettingWindow extends JFrame{
-	private String yourFont = "¹è´ŞÀÇ¹ÎÁ· ÇÑ³ªÃ¼ Pro";
+	private String yourFont = "ë°°ë‹¬ì˜ë¯¼ì¡± í•œë‚˜ì²´ Pro";
 	private Color yourColor = new Color(240, 232, 232);
-	private String[] h = {"0½Ã", "1½Ã", "2½Ã", "3½Ã", "4½Ã", "5½Ã", "6½Ã", "7½Ã", "8½Ã", "9½Ã", "10½Ã", "11½Ã", "12½Ã"
-			, "13½Ã","14½Ã", "15½Ã", "16½Ã", "17½Ã", "18½Ã", "19½Ã","20½Ã", "21½Ã","22½Ã", "23½Ã"};
-	private String[] m = {"0ºĞ", "10ºĞ", "20ºĞ", "30ºĞ", "40ºĞ", "50ºĞ"};
+	private String[] h = {"0ì‹œ", "1ì‹œ", "2ì‹œ", "3ì‹œ", "4ì‹œ", "5ì‹œ", "6ì‹œ", "7ì‹œ", "8ì‹œ", "9ì‹œ", "10ì‹œ", "11ì‹œ", "12ì‹œ"
+			, "13ì‹œ","14ì‹œ", "15ì‹œ", "16ì‹œ", "17ì‹œ", "18ì‹œ", "19ì‹œ","20ì‹œ", "21ì‹œ","22ì‹œ", "23ì‹œ"};
+	private String[] m = {"0ë¶„", "10ë¶„", "20ë¶„", "30ë¶„", "40ë¶„", "50ë¶„"};
 	private String[] credit = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"};
-	private String[] gradeList = {"1ÇĞ³â", "2ÇĞ³â", "3ÇĞ³â", "4ÇĞ³â"};
+	private String[] gradeList = {"1í•™ë…„", "2í•™ë…„", "3í•™ë…„", "4í•™ë…„"};
 	private int sH = 0, sM = 0, eH =0, eM = 0, mC = 8, MC = 8, Grade = 1;
 	private boolean isReturn;
 	public void callWindow() {
@@ -32,12 +32,12 @@ class etcSettingWindow extends JFrame{
 		c.setBackground(yourColor);
 		
 		
-		JLabel l1 = new JLabel("Èñ¸Á °­ÀÇ ½ÃÀÛ ½Ã°£");
+		JLabel l1 = new JLabel("í¬ë§ ê°•ì˜ ì‹œì‘ ì‹œê°„");
 		l1.setBounds(20, 10, 220, 20);
 		l1.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l1);
 		
-		JLabel l2 = new JLabel("Èñ¸Á °­ÀÇ Á¾·á ½Ã°£");
+		JLabel l2 = new JLabel("í¬ë§ ê°•ì˜ ì¢…ë£Œ ì‹œê°„");
 		l2.setBounds(240, 10, 220, 20);
 		l2.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l2);
@@ -93,17 +93,17 @@ class etcSettingWindow extends JFrame{
 		eMin.setBounds(330, 40, 70, 20);
 		c.add(eMin);
 		
-		JLabel l3 = new JLabel("ÃÖ¼Ò ¼ö°­ ÇĞÁ¡");
+		JLabel l3 = new JLabel("ìµœì†Œ ìˆ˜ê°• í•™ì ");
 		l3.setBounds(20, 80, 140, 20);
 		l3.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l3);
 		
-		JLabel l4 = new JLabel("ÃÖ´ë ¼ö°­ ÇĞÁ¡");
+		JLabel l4 = new JLabel("ìµœëŒ€ ìˆ˜ê°• í•™ì ");
 		l4.setBounds(160, 80, 140, 20);
 		l4.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l4);
 		
-		JLabel l5 = new JLabel("ÇöÀç ÇĞ³â");
+		JLabel l5 = new JLabel("í˜„ì¬ í•™ë…„");
 		l5.setBounds(320, 80, 130, 20);
 		l5.setFont(new Font(yourFont, Font.PLAIN, 21));
 		c.add(l5);
@@ -141,7 +141,7 @@ class etcSettingWindow extends JFrame{
 		grade.setBounds(320, 110, 70, 20);
 		c.add(grade);
 		
-		JButton run = new JButton("½ÇÇàÇÏ±â");
+		JButton run = new JButton("ì‹¤í–‰í•˜ê¸°");
 		run.setBounds(100, 200, 200, 50);
 		run.setFont(new Font(yourFont, Font.PLAIN, 14));
 		c.add(run);
@@ -149,10 +149,10 @@ class etcSettingWindow extends JFrame{
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(mC>MC) { //Error on credit setting
-					JOptionPane.showMessageDialog(c, "ÇĞÁ¡À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
+					JOptionPane.showMessageDialog(c, "í•™ì ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
 				}
 				else if(sH*6+sM>=eH*6+eM) { //Error on time setting
-					JOptionPane.showMessageDialog(c, "½Ã°£À» È®ÀÎÇØ ÁÖ¼¼¿ä!");
+					JOptionPane.showMessageDialog(c, "ì‹œê°„ì„ í™•ì¸í•´ ì£¼ì„¸ìš”!");
 				}
 				else {
 					isReturn = true;
