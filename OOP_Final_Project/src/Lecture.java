@@ -53,6 +53,13 @@ class Lecture extends ScheduleBlock{
 		System.out.println();
 	}
 	
+	public boolean isSameLecture(Lecture l) {
+		if(l.code.substring(0, 5).compareTo(code.substring(0, 5))==0) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String getProfessor() {
 		return professor;
 	}

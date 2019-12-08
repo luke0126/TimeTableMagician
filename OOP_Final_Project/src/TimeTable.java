@@ -138,7 +138,7 @@ class TimeTable extends JFrame{
 				isReturn = true;
 				prevOrNext=-1;
 				dispose();
-				timeTables.elementAt(tableIndex-1>=0?tableIndex-1:0).callWindow(timeTables, tableIndex-1>=0?tableIndex+1:0);
+				timeTables.elementAt(tableIndex-1>=0?tableIndex-1:0).callWindow(timeTables, tableIndex-1>=0?tableIndex-1:0);
 			}
 		});
 		nextBtn.addActionListener(new ActionListener() {

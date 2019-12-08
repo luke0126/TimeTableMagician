@@ -2,10 +2,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Vector;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
 
 public class ParsingLecture {
 	
@@ -13,16 +16,16 @@ public class ParsingLecture {
 	
 	public ParsingLecture(String route) {
 		try {
-			FileInputStream xls = new FileInputStream(route);
-			HSSFWorkbook workbook = new HSSFWorkbook(xls);
+			FileInputStream file = new FileInputStream(route);
+			Workbook workbook = WorkbookFactory.create(file);
 			int rowIndex = 0;
 			int columnIndex = 0;
-			HSSFSheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(0);
 			
 			int rows = sheet.getPhysicalNumberOfRows();
 			for(rowIndex=1;rowIndex<rows;rowIndex++) {
 				
-				HSSFRow row = sheet.getRow(rowIndex);
+				Row row = sheet.getRow(rowIndex);
 				if(row != null) {
 					int cells = row.getPhysicalNumberOfCells();
 					String lectureType="";
@@ -35,7 +38,7 @@ public class ParsingLecture {
 					boolean isMajor=false;
 					int lectureTypeInt=0;
 					for(columnIndex=0; columnIndex<=cells;columnIndex++) {
-						HSSFCell cell = row.getCell(columnIndex);
+						Cell cell = row.getCell(columnIndex);
 						String value = "";
 						if(cell!=null) {
 							value=cell.getStringCellValue()+"";
@@ -141,7 +144,7 @@ public class ParsingLecture {
 				}
 			}
 			workbook.close();
-		} catch (IOException e) {
+		} catch (IOException | InvalidFormatException e) {
 			e.printStackTrace();
 		}
 		

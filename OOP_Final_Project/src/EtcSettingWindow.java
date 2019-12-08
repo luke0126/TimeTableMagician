@@ -30,6 +30,7 @@ class EtcSettingWindow extends JFrame {
 	private Vector<NonLecture> nonLectures = new Vector<NonLecture>();
 	private Vector<Integer> creditList = new Vector<Integer>();
 	private Vector<TimeTable> timeTables = new Vector<TimeTable>();
+	private Vector<Vector<TimeTable>> timeTablesCases = new Vector<Vector<TimeTable>>();
 	private Vector<Vector<Lecture>> lectures;
 
 	
@@ -202,8 +203,7 @@ class EtcSettingWindow extends JFrame {
 					lectures.elementAt(i).elementAt(0).getLecture_type()==1)) {//Essential means basic course or essential course
 				boolean isBreak=false;
 				for(int j=0;j<TimeTableMain.sL.getLectures().size();j++) {
-					if(TimeTableMain.sL.getLectures().elementAt(j).getCode().substring(0, 5).compareTo
-							(lectures.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+					if(TimeTableMain.sL.getLectures().elementAt(j).isSameLecture(lectures.elementAt(i).firstElement())) {
 						isBreak=true;
 					}
 				}
@@ -223,15 +223,30 @@ class EtcSettingWindow extends JFrame {
 		}
 		
 		pushMajor(TimeTableMain.sL.getLectures(), selectedCredit, 0); //Push essential lectures
-		
+		if(onlyMajor.size()==0) {
+			onlyMajor.add(TimeTableMain.sL.getLectures());
+		}
 		for(int i=0;i<onlyMajor.size();i++) {
+			timeTablesCases.add(new Vector<TimeTable>());
 			pushTimetable(onlyMajor.elementAt(i), creditList.elementAt(i), essential.size()); //Make timetable by backtracking
 		}
-	}
-	private void pushMajor(Vector<Lecture> tempLectures, int credit, int pivot) { //Push essential major
-		if(onlyMajor.size()>5) {
-			return;
+		
+		int maxLength=0;
+		for(int i=0;i<timeTablesCases.size();i++) {
+			maxLength=maxLength>timeTablesCases.elementAt(i).size()?maxLength:timeTablesCases.elementAt(i).size();
 		}
+		
+		for(int i=0;i<maxLength;i++) {
+			for(int j=0;j<timeTablesCases.size();j++) {
+				if(timeTablesCases.elementAt(j).size()>i) {
+					timeTables.add(timeTablesCases.elementAt(j).elementAt(i));
+				}
+			}
+		}
+	}
+	
+	private void pushMajor(Vector<Lecture> tempLectures, int credit, int pivot) { //Push essential major
+		
 		for(int i=pivot;i<essential.size();i++) {
 			for(int j=0;j<essential.elementAt(i).size();j++) {
 				boolean canPush = true;
@@ -242,8 +257,7 @@ class EtcSettingWindow extends JFrame {
 					}
 				}
 				for(int k=0;k<tempLectures.size();k++) {
-					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())||
-							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(essential.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+					if(tempLectures.elementAt(k).isIntersected(essential.elementAt(i).elementAt(j).getTime())) {
 						canPush=false;
 						break;
 					}
@@ -258,16 +272,18 @@ class EtcSettingWindow extends JFrame {
 				}
 			}
 		}
-		onlyMajor.add(tempLectures);
-		creditList.add(credit);
+		if(tempLectures.size()>=essential.size()+TimeTableMain.sL.getLectures().size() - 1) {
+			onlyMajor.add(tempLectures);
+			creditList.add(credit);
+		}
 		return;
 	}
 	
 	private void pushTimetable(Vector<Lecture> tempLectures, int credit, int pivot) { //Push lectures
 		if(credit>=mC&&credit<=MC) {
-			timeTables.add(new TimeTable(credit, tempLectures, nonLectures));
-			timeTables.lastElement().computeEndtime();
-			timeTables.lastElement().computeStarttime();
+			timeTablesCases.lastElement().add(new TimeTable(credit, tempLectures, nonLectures));
+			timeTablesCases.lastElement().lastElement().computeEndtime();
+			timeTablesCases.lastElement().lastElement().computeStarttime();
 		}
 		if(credit>=MC) {
 			return;
@@ -284,7 +300,7 @@ class EtcSettingWindow extends JFrame {
 				}
 				for(int k=0;k<tempLectures.size();k++) {
 					if(tempLectures.elementAt(k).isIntersected(lectures.elementAt(i).elementAt(j).getTime())||
-							tempLectures.elementAt(k).getCode().substring(0, 5).compareTo(lectures.elementAt(i).elementAt(0).getCode().substring(0, 5))==0) {
+							tempLectures.elementAt(k).isSameLecture(lectures.elementAt(i).firstElement())) {
 						canPush=false;
 						break;
 					}
