@@ -129,6 +129,9 @@ class NonLectureWindow extends JFrame{
 		
 		JButton addS = new JButton("추가");
 		addS.setBounds(20, 300, 80, 50);
+		addS.setBackground(new Color(96, 125, 240));
+		addS.setBorderPainted(false);
+		addS.setForeground(Color.white);
 		addS.setFont(new Font(yourFont, Font.PLAIN, 14));
 		c.add(addS);
 		
@@ -136,12 +139,16 @@ class NonLectureWindow extends JFrame{
 		JList<String> sList = new JList<String>(listModel);
 		sList.setBounds(650, 20, 800, 350);
 		sList.setFont(new Font(yourFont, Font.PLAIN, 18));
+		sList.setBorder(BorderFactory.createLineBorder(new Color(96, 125, 240), 5));
 		c.add(sList);
 
 		
 		JButton run = new JButton("다음");
 		run.setBounds(160, 300, 80, 50);
-		run.setFont(new Font(yourFont, Font.PLAIN, 14));
+		run.setBackground(new Color(96, 125, 240));
+		run.setBorderPainted(false);
+		run.setFont(new Font(yourFont, Font.PLAIN, 18));
+		run.setForeground(Color.white);
 		c.add(run);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

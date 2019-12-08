@@ -1,10 +1,12 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ class TimeTable extends JFrame{
 	private int prevOrNext = 0;
 	private boolean isReturn = false; //Is window is closed
 	private Color yourColor = new Color(240, 232, 232);
+	private String yourFont = "배달의민족 한나체 Pro";
 	private String[] day = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 	 private String[] timeInfo = {"0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시",
 			 "<html> 8시<br />0교시</html>", "<html> 9시<br />1교시</html>", "<html> 10시<br />2교시</html>", "<html> 11시<br />3교시</html>", 
@@ -41,7 +44,11 @@ class TimeTable extends JFrame{
 		for(int i=0;i<7;i++) {
 			dayBtn[i]=new JButton(day[i]);
 			dayBtn[i].setBounds(20 + 195*(i+1), 20, 195, height/rowNum);
-			dayBtn[i].setBackground(new Color(255, 255, 255));
+			dayBtn[i].setBackground(new Color(125, 149, 245));
+			dayBtn[i].setFont(new Font(yourFont, Font.PLAIN, 18));
+			dayBtn[i].setForeground(Color.white);
+			dayBtn[i].setFocusable(false);
+			dayBtn[i].setBorder(BorderFactory.createLineBorder(Color.white, 1));
 			c.add(dayBtn[i]);
 		}
 		
@@ -49,18 +56,24 @@ class TimeTable extends JFrame{
 		for(int i=allStartTime;i<allEndTime;i++) {
 			timeBtn[i]=new JButton(timeInfo[i]);
 			timeBtn[i].setBounds(20, 20+(height/rowNum)*(i+1 - allStartTime), 195, height/rowNum);
-			timeBtn[i].setBackground(new Color(255, 255, 255));
+			timeBtn[i].setBackground(new Color(125, 149, 245));
+			timeBtn[i].setFont(new Font(yourFont, Font.PLAIN, 18));
+			timeBtn[i].setForeground(Color.white);
+			timeBtn[i].setFocusable(false);
+			timeBtn[i].setBorder(BorderFactory.createLineBorder(Color.white, 1));
 			
 			c.add(timeBtn[i]);
 		}
 
 		JButton nextBtn = new JButton("다음");
 		nextBtn.setBounds(1620, 20, 160, 120);
+		nextBtn.setFont(new Font(yourFont, Font.PLAIN, 18));
 		nextBtn.setBackground(new Color(255, 255, 255));
 		c.add(nextBtn);
 		
 		JButton prevBtn = new JButton("이전");
 		prevBtn.setBounds(1620, 800, 160, 120);
+		prevBtn.setFont(new Font(yourFont, Font.PLAIN, 18));
 		prevBtn.setBackground(new Color(255, 255, 255));
 		c.add(prevBtn);
 		
@@ -72,6 +85,9 @@ class TimeTable extends JFrame{
 				TimeBlock tB = lectures.elementAt(i).getTime().elementAt(j);
 				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1), 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)),
 						195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
+				sBtn.lastElement().setBackground(lc);
+				sBtn.lastElement().setBorderPainted(false);
+				sBtn.lastElement().setFont(new Font(yourFont, Font.PLAIN, 14));
 				sBtn.lastElement().setBackground(lc);
 				c.add(sBtn.lastElement());
 			}
@@ -102,6 +118,8 @@ class TimeTable extends JFrame{
 				sBtn.lastElement().setBounds(20 + 195*(tB.getDay()+1)
 						, 20+(int)((height/rowNum)*(tB.getStartTime()+1-allStartTime)), 195, (int)((height/rowNum)*(tB.getEndTime()-tB.getStartTime())));
 				sBtn.lastElement().setBackground(lc);
+				sBtn.lastElement().setBorderPainted(false);
+				sBtn.lastElement().setFont(new Font(yourFont, Font.PLAIN, 14));
 				c.add(sBtn.lastElement());
 			}
 		}

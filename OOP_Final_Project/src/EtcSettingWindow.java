@@ -57,6 +57,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(l2);
 		
 		JComboBox<String> sHour = new JComboBox<String>(h); //Set start time
+		sHour.setBackground(Color.white);
 		sHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -68,6 +69,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(sHour);
 		
 		JComboBox<String> sMin = new JComboBox<String>(m);
+		sMin.setBackground(Color.white);
 		sMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -86,6 +88,7 @@ class EtcSettingWindow extends JFrame {
 		
 		
 		JComboBox<String> eHour = new JComboBox<String>(h); //Set end time
+		eHour.setBackground(Color.white);
 		eHour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -97,6 +100,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(eHour);
 		
 		JComboBox<String> eMin = new JComboBox<String>(m);
+		eMin.setBackground(Color.white);
 		eMin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -123,6 +127,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(l5);
 		
 		JComboBox<String> mCredit = new JComboBox<String>(credit); //Set credit
+		mCredit.setBackground(Color.white);
 		mCredit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -134,6 +139,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(mCredit);
 		
 		JComboBox<String> MCredit = new JComboBox<String>(credit);
+		MCredit.setBackground(Color.white);
 		MCredit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -145,6 +151,7 @@ class EtcSettingWindow extends JFrame {
 		c.add(MCredit);
 		
 		JComboBox<String> gradeComboBox = new JComboBox<String>(gradeList); //Set grade(level)
+		gradeComboBox.setBackground(Color.white);
 		gradeComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
@@ -158,6 +165,9 @@ class EtcSettingWindow extends JFrame {
 		JButton run = new JButton("실행하기");
 		run.setBounds(100, 200, 200, 50);
 		run.setFont(new Font(yourFont, Font.PLAIN, 14));
+		run.setBackground(new Color(96, 125, 240));
+		run.setBorderPainted(false);
+		run.setForeground(Color.white);
 		c.add(run);
 		
 		run.addActionListener(new ActionListener() {
