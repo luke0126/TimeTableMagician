@@ -223,7 +223,7 @@ class NonLectureWindow extends JFrame{
 		
 		run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EtcSettingWindow etc = new EtcSettingWindow(lectures); 
+				EtcSettingWindow etc = new EtcSettingWindow(lectures, nonLectures); 
 				dispose();
 			}
 		});

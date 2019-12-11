@@ -34,9 +34,10 @@ class EtcSettingWindow extends JFrame {
 	private Vector<Vector<Lecture>> lectures;
 
 	
-	public EtcSettingWindow(Vector<Vector<Lecture>> lectures) {
+	public EtcSettingWindow(Vector<Vector<Lecture>> lectures, Vector<NonLecture> nonLectures) {
 		
 		this.lectures = lectures;
+		this.nonLectures = nonLectures;
 		getContentPane().removeAll();
 		this.refreshGUI();
 		setTitle("Timetable Magician");
